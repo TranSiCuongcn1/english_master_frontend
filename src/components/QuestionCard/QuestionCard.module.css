@@ -1,0 +1,99 @@
+.questionCard {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.questionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.questionNumber {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.partBadge {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.questionText {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.optionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.optionButton {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  text-align: left;
+  transition: all 0.2s;
+  background-color: transparent;
+}
+
+.optionButton:hover {
+  background-color: var(--bg-main);
+  border-color: var(--primary-color);
+}
+
+.optionButton.selected {
+  background-color: var(--secondary-color);
+  border-color: var(--primary-color);
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.selected .optionLabel {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border-color: var(--primary-color);
+}
+
+.optionContent {
+  font-size: 1rem;
+  color: var(--text-main);
+  font-weight: 400;
+}
+
+.selected .optionContent {
+  font-weight: 600;
+}

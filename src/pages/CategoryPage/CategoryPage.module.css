@@ -1,0 +1,208 @@
+.categoryPage {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 40px 0 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 10px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  width: fit-content;
+  box-shadow: var(--shadow-sm);
+}
+
+.title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.yearFilter {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0;
+  background: var(--secondary-color);
+  padding: 8px;
+  border-radius: 16px;
+  width: fit-content;
+}
+
+.yearBtn {
+  padding: 10px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.95rem;
+}
+
+.yearBtn.activeYear {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.testGrid {
+  display: grid;
+  /* Hoàn tác về 534px để tổng là 1100px */
+  grid-template-columns: 534px 534px; 
+  gap: 32px;
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 1150px) {
+  .categoryPage {
+    max-width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .testGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 850px) {
+  .testGrid {
+    grid-template-columns: 1fr;
+    max-width: 550px;
+    margin: 0 auto;
+  }
+}
+
+.testCard {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s ease;
+  height: 260px;
+  width: 100%;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.testCard:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-color);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.testTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.yearBadge {
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.testDescription {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.testMeta {
+  display: flex;
+  gap: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border-color);
+  margin-top: auto;
+  margin-bottom: 16px;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.startButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--gradient-primary);
+  color: #ffffff;
+  padding: 16px;
+  border-radius: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+.startButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px -4px rgba(37, 99, 235, 0.6);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.pageBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  font-weight: 800;
+  color: var(--text-main);
+  box-shadow: var(--shadow-sm);
+}
+
+.pageBtn:hover:not(:disabled) {
+  background: var(--primary-light);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.pageBtn.activePage {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}

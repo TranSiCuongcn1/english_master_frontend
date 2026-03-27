@@ -1,0 +1,128 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.backLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  margin-bottom: 16px;
+  justify-content: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+.topicGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.topicCard {
+  background-color: var(--bg-card);
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.topicCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+.topicHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.topicIcon {
+  width: 48px;
+  height: 48px;
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topicTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.topicDesc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+.wordList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: var(--bg-main);
+  border-radius: 12px;
+}
+
+.wordItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wordName {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.wordType {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.moreWords {
+  font-size: 0.85rem;
+  color: var(--primary-color);
+  font-weight: 600;
+  text-align: center;
+}
+
+.studyBtn {
+  width: 100%;
+  background-color: white;
+  border: 1.5px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.studyBtn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}

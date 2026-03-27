@@ -1,0 +1,20 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  padding: 32px 0;
+}
+
+.footer {
+  margin-top: auto;
+  padding: 24px 0;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-secondary);
+  text-align: center;
+  font-size: 0.875rem;
+}
