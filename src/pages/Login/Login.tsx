@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, ArrowRight, BookOpen } from 'lucide-react';
 import styles from './Login.module.css';
+import type { User } from '../../types';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -12,8 +13,18 @@ const Login: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find((u: any) => u.email === email && u.password === password);
+    let users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+    
+    // Khởi tạo tài khoản mặc định nếu chưa có
+    if (users.length === 0) {
+      users = [
+        { name: 'Regular User', email: 'user@example.com', password: 'password123', role: 'user' } as any,
+        { name: 'System Admin', email: 'admin@example.com', password: 'admin123', role: 'admin' } as any
+      ];
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    const user = users.find((u: User) => u.email === email && u.password === password);
 
     if (user) {
       localStorage.setItem('currentUser', JSON.stringify({ name: user.name, email: user.email }));

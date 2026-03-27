@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Question } from '../types';
+import type { Question } from '../../types';
 import styles from './QuestionCard.module.css';
 
 interface QuestionCardProps {
@@ -27,7 +27,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
       <p className={styles.questionText}>{question.text}</p>
       
       <div className={styles.optionsList}>
-        {question.options?.map((option, idx) => {
+        {question.options?.map((option: string, idx: number) => {
           const isSelected = selectedAnswer === option;
           const label = String.fromCharCode(65 + idx); // A, B, C, D...
           

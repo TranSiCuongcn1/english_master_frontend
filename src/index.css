@@ -23,8 +23,28 @@
   --header-height: 72px;
 }
 
+[data-theme='dark'] {
+  --primary-color: #3b82f6;
+  --primary-hover: #60a5fa;
+  --primary-light: #1e293b;
+  --secondary-color: #1e293b;
+  --text-main: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --bg-main: #0f172a;
+  --bg-card: #1e293b;
+  --border-color: #334155;
+  --success-color: #34d399;
+  --error-color: #f87171;
+  --warning-color: #fbbf24;
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5), 0 2px 4px -2px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+}
+
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 * {
@@ -36,11 +56,12 @@ a {
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background-color: var(--bg-main);
-  background-image: radial-gradient(#e2e8f0 0.5px, transparent 0.5px);
+  background-image: radial-gradient(var(--border-color) 0.5px, transparent 0.5px);
   background-size: 24px 24px; /* Chấm bi nhẹ cho nền đỡ trống */
   color: var(--text-main);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button {

@@ -1,32 +1,74 @@
-# EnglishMaster Frontend
+# 🎓 EnglishMaster - English Learning Platform
 
-Một ứng dụng học tiếng Anh hiện đại giúp luyện thi TOEIC, IELTS, HSK và cung cấp các tài liệu học tập như Flashcards, Từ vựng, Ngữ pháp.
+EnglishMaster là một nền tảng học tiếng Anh trực tuyến hiện đại, được xây dựng với mục tiêu cung cấp lộ trình học tập bài bản, các bài thi thử chất lượng (TOEIC, IELTS) và hệ thống quản lý tiến độ thông minh.
 
-## 📁 Cấu trúc thư mục (Project Structure)
+---
 
-Dự án được tổ chức theo cấu trúc module hóa để dễ dàng bảo trì và mở rộng:
+## ✨ Các Tính Năng Đã Hoàn Thiện
 
-- **`src/assets/`**: Chứa các tài nguyên tĩnh như hình ảnh (logo, hero image), icons và fonts.
-- **`src/components/`**: Các thành phần giao diện (UI Components) nhỏ và có tính tái sử dụng cao.
-  - *Ví dụ*: `Navbar`, `Sidebar`, `QuestionCard`. Mỗi component nằm trong thư mục riêng kèm CSS Module.
-- **`src/pages/`**: Các trang chính của ứng dụng. Mỗi trang là một folder chứa logic (`.tsx`) và phong cách riêng (`.module.css`).
-  - *Ví dụ*: `Home`, `Login`, `TestsHub`, `LessonsHub`.
-- **`src/data/`**: Chứa dữ liệu mẫu (Mock Data) phục vụ cho việc hiển thị khi chưa có API thực tế.
-- **`src/hooks/`**: Các React Custom Hooks dùng để xử lý logic nghiệp vụ (Business Logic) độc lập.
-  - *Ví dụ*: `useTimer.ts` xử lý đếm ngược thời gian làm bài.
-- **`src/styles/`**: Chứa các định nghĩa CSS toàn cục, biến môi trường CSS (Variables), hoặc các quy tắc style dùng chung cho toàn bộ ứng dụng.
-- **`src/types/`**: Nơi quản lý tập trung các định nghĩa kiểu dữ liệu (TypeScript Interfaces/Types) để đảm bảo tính an toàn và nhất quán về dữ liệu.
+### 🔑 1. Hệ Thống Tài Khoản & Bảo Mật
+*   **Đăng ký & Đăng nhập:** Hệ thống xác thực người dùng dựa trên `localStorage`.
+*   **Phân quyền (RBAC):** Phân biệt rõ rệt giữa tài khoản **User** (Học viên) và **Admin** (Quản trị viên).
+*   **ProtectedRoute:** Chỉ người dùng đã đăng nhập mới có thể truy cập các nội dung học tập và bài thi.
+*   **Thông tin cá nhân:** Trang Profile cho phép người dùng cập nhật Họ tên và thay đổi Mật khẩu.
 
-## 🚀 Công nghệ sử dụng
+### 📝 2. Luyện Thi & Học Tập (Learning Hub)
+*   **Tests Hub:** Kho đề thi phong phú bao gồm TOEIC, IELTS, HSK...
+*   **Giao diện làm bài chuyên nghiệp:** 
+    *   Đồng hồ đếm ngược (Timer) với tính năng tự động nộp bài khi hết giờ.
+    *   Thanh tiến độ (Progress Bar) theo dõi số câu đã trả lời.
+    *   Bảng điều hướng câu hỏi nhanh.
+*   **Kết quả chi tiết:** Hiển thị điểm số, thời gian làm bài, và giải thích chi tiết cho từng câu hỏi đúng/sai.
+*   **Lessons Hub:** Các chuyên mục học tập riêng biệt:
+    *   *Vocabulary:* Học từ vựng theo chủ đề.
+    *   *Grammar:* Hệ thống kiến thức ngữ pháp trọng tâm.
+    *   *Flashcards:* Luyện trí nhớ với bộ thẻ từ vựng tương tác.
 
-- **React 19** & **Vite**: Môi trường phát triển nhanh và hiện đại.
-- **TypeScript**: Đảm bảo code rõ ràng, ít lỗi.
-- **React Router 7**: Quản lý điều hướng trang.
-- **Lucide React**: Bộ icon đẹp và nhẹ.
-- **CSS Modules**: Tránh xung đột CSS và quản lý style theo từng component.
+### 📊 3. Tính Năng Tương Tác & Thống Kê
+*   **Hồ sơ năng lực (Dashboard):** Thống kê tổng số bài đã làm, độ chính xác trung bình và tổng thời gian học ngay tại trang cá nhân.
+*   **Bảng xếp hạng (Leaderboard):** Vinh danh các học viên có điểm số cao nhất toàn hệ thống với giao diện Podium (Bục nhận giải) hiện đại.
+*   **Thông báo (Notifications):** Hệ thống thông báo thời gian thực về nội dung mới, lời chào mừng và kết quả học tập.
 
-## 🛠 Hướng dẫn phát triển
+### 🛡️ 4. Quản Trị Hệ Thống (Admin Dashboard)
+*   **Thống kê tổng quan:** Theo dõi tổng lượng người dùng, số bài thi và lượt làm bài của toàn sàn.
+*   **Quản lý người dùng:** Xem danh sách, tìm kiếm và có quyền xóa tài khoản học viên.
+*   **Quản lý bài thi:** Xem và quản lý danh sách đề thi hiện có trên hệ thống.
 
-1. Cài đặt thư viện: `npm install`
-2. Chạy dự án: `npm run dev`
-3. Xây dựng bản production: `npm run build`
+### 🎨 5. Giao Diện & Trải Nghiệm (UI/UX)
+*   **Dark Mode:** Hỗ trợ giao diện Tối hoàn hảo, bảo vệ mắt khi học ban đêm.
+*   **Responsive Design:** Tương thích hoàn toàn trên Desktop, Tablet và Mobile.
+*   **Modern Navbar:** Thanh công cụ đục (Opaque), phân nhóm chức năng gọn gàng, tích hợp hiệu ứng Hover và Divider tinh tế.
+
+---
+
+## 🛠 Công Nghệ Sử Dụng
+*   **Frontend:** React 19, TypeScript
+*   **Build Tool:** Vite
+*   **Styling:** CSS Modules (Global & Component-scoped)
+*   **Icons:** Lucide React
+*   **Routing:** React Router DOM v7
+
+---
+
+## 🚀 Thông Tin Đăng Nhập Mẫu
+
+Hệ thống đã được cài đặt sẵn 2 tài khoản mặc định để bạn trải nghiệm nhanh:
+
+1.  **Tài khoản Quản trị (Admin):**
+    *   Email: `admin@example.com`
+    *   Password: `admin123`
+2.  **Tài khoản Học viên (User):**
+    *   Email: `user@example.com`
+    *   Password: `password123`
+
+---
+
+## 📂 Cấu Trúc Thư Mục Chính
+*   `src/components/`: Các thành phần dùng chung (Navbar, ProtectedRoute, Layout...).
+*   `src/pages/`: Các trang chính (Home, TestTaking, AdminDashboard, Profile...).
+*   `src/hooks/`: Các logic tùy chỉnh (useTimer, useTheme...).
+*   `src/data/`: Chứa Mock Data (Đề thi, từ vựng, ngữ pháp).
+*   `src/types/`: Định nghĩa kiểu dữ liệu TypeScript cho toàn dự án.
+
+---
+*Dự án được phát triển với sự hỗ trợ của Gemini CLI.*

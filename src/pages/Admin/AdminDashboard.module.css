@@ -1,0 +1,269 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-main);
+}
+
+.sidebar {
+  width: 260px;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border-color);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.adminIcon {
+  color: var(--primary-color);
+}
+
+.sidebarHeader h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.navItem:hover {
+  background: var(--bg-main);
+  color: var(--primary-color);
+}
+
+.navItem.active {
+  background: var(--primary-light);
+  color: var(--primary-color);
+}
+
+.backBtn {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 12px;
+}
+
+/* Content Area */
+.content {
+  flex-grow: 1;
+  padding: 40px;
+  overflow-y: auto;
+}
+
+.pageTitle {
+  font-size: 1.75rem;
+  margin-bottom: 32px;
+}
+
+/* Stats Panel */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.statCard {
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.statCard svg {
+  color: var(--primary-color);
+  opacity: 0.8;
+}
+
+.statInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.statLabel {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Users Panel */
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.searchBar input {
+  border: none;
+  background: transparent;
+  color: var(--text-main);
+  outline: none;
+  width: 100%;
+}
+
+.tableWrapper {
+  background: var(--bg-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table th {
+  background: var(--bg-main);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.roleBadge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.admin {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.user {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* Tests Panel */
+.addBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.testGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.testItem {
+  background: var(--bg-card);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.testInfo h4 {
+  margin-bottom: 4px;
+}
+
+.testInfo p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.testActions {
+  display: flex;
+  gap: 12px;
+}
+
+.editBtn {
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.deleteBtn {
+  color: var(--text-secondary);
+  transition: color 0.2s;
+}
+
+.deleteBtn:hover {
+  color: var(--error-color);
+}
+
+.deleteBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 80px;
+    padding: 20px 10px;
+  }
+  .sidebarHeader h2, .navItem span, .backBtn span {
+    display: none;
+  }
+  .navItem {
+    justify-content: center;
+    padding: 15px;
+  }
+}

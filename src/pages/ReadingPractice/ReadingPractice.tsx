@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { mockReading } from '../data/tests';
+import { mockReading } from '../../data/tests';
 import { ArrowLeft, BookOpen, Clock, ChevronRight } from 'lucide-react';
 import styles from './ReadingPractice.module.css';
 

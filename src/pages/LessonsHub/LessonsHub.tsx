@@ -7,7 +7,7 @@ import {
   ArrowRight,
   BookMarked
 } from 'lucide-react';
-import styles from './Home.module.css';
+import styles from '../Home/Home.module.css';
 
 const LessonsHub: React.FC = () => {
   const categories = [

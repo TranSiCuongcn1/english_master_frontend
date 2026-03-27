@@ -1,42 +1,57 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 export const useTimer = (initialMinutes: number, onTimeUp?: () => void) => {
-  const [secondsLeft, setSecondsLeft] = useState(initialMinutes * 60);
-  const [isActive, setIsActive] = useState(false);
+  const [state, setState] = useState({
+    secondsLeft: initialMinutes * 60,
+    isActive: false,
+  });
+  
+  const onTimeUpRef = useRef(onTimeUp);
+
+  // Update ref when onTimeUp changes
+  useEffect(() => {
+    onTimeUpRef.current = onTimeUp;
+  }, [onTimeUp]);
 
   useEffect(() => {
     let interval: number | undefined;
 
-    if (isActive && secondsLeft > 0) {
+    if (state.isActive && state.secondsLeft > 0) {
       interval = window.setInterval(() => {
-        setSecondsLeft((prev) => prev - 1);
+        setState((prev) => {
+          if (prev.secondsLeft <= 1) {
+            if (interval) clearInterval(interval);
+            if (onTimeUpRef.current) onTimeUpRef.current();
+            return { secondsLeft: 0, isActive: false };
+          }
+          return { ...prev, secondsLeft: prev.secondsLeft - 1 };
+        });
       }, 1000);
-    } else if (secondsLeft === 0) {
-      setIsActive(false);
-      if (onTimeUp) onTimeUp();
     }
 
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isActive, secondsLeft, onTimeUp]);
+  }, [state.isActive]);
 
-  const start = useCallback(() => setIsActive(true), []);
-  const pause = useCallback(() => setIsActive(false), []);
+  const start = useCallback(() => setState(prev => ({ ...prev, isActive: true })), []);
+  const pause = useCallback(() => setState(prev => ({ ...prev, isActive: false })), []);
   const reset = useCallback(() => {
-    setIsActive(false);
-    setSecondsLeft(initialMinutes * 60);
+    setState({
+      isActive: false,
+      secondsLeft: initialMinutes * 60,
+    });
   }, [initialMinutes]);
 
   const formatTime = () => {
-    const minutes = Math.floor(secondsLeft / 60);
-    const seconds = secondsLeft % 60;
+    const minutes = Math.floor(state.secondsLeft / 60);
+    const seconds = state.secondsLeft % 60;
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
   return {
-    secondsLeft,
-    isActive,
+    secondsLeft: state.secondsLeft,
+    isActive: state.isActive,
     start,
     pause,
     reset,

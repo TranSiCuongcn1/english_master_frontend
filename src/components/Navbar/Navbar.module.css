@@ -1,6 +1,6 @@
 .navbar {
   height: var(--header-height);
-  background-color: var(--bg-card);
+  background-color: var(--bg-card); /* Màu trắng ở light mode, màu xám đậm ở dark mode */
   border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
@@ -23,6 +23,11 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--primary-color);
+  text-decoration: none;
+}
+
+.logoHighlight {
+  color: var(--text-main);
 }
 
 .logoIcon {
@@ -32,9 +37,10 @@
 .navLinks {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 24px; /* Giảm gap chung để hài hòa hơn */
 }
 
+/* Các link chữ chính: Tests, Lessons */
 .navLink {
   color: var(--text-secondary);
   font-weight: 600;
@@ -43,47 +49,92 @@
   align-items: center;
   text-decoration: none;
   font-size: 0.95rem;
-  position: relative;
+  padding: 6px 12px;
+  border-radius: 8px;
 }
 
 .navLink:hover {
   color: var(--primary-color);
+  background: var(--primary-light);
 }
 
-.navLink::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--primary-color);
-  transition: width 0.2s;
+/* Các nút icon: Leaderboard, ThemeToggle, Notifications */
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 12px;
+  color: var(--text-secondary);
+  background: var(--bg-main);
+  transition: all 0.2s;
+  border: 1px solid transparent;
 }
 
-.navLink:hover::after {
-  width: 100%;
+.iconBtn:hover {
+  background: var(--primary-light);
+  color: var(--primary-color);
+  border-color: var(--border-color);
+  transform: translateY(-2px);
+}
+
+.themeToggle {
+  composes: iconBtn;
+}
+
+.themeToggle:hover {
+  transform: rotate(15deg) translateY(-2px);
 }
 
 .userSection {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+  padding-left: 16px;
+  border-left: 2px solid var(--border-color);
+  margin-left: 8px;
+}
+
+.adminLink {
+  color: var(--warning-color);
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(245, 158, 11, 0.1);
+  transition: all 0.2s;
+}
+
+.adminLink:hover {
+  background: rgba(245, 158, 11, 0.2);
+  transform: scale(1.05);
 }
 
 .userName {
   font-weight: 600;
   color: var(--text-main);
   font-size: 0.95rem;
+  text-decoration: none;
+  transition: color 0.2s;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.userName:hover {
+  color: var(--primary-color);
+  background: var(--primary-light);
 }
 
 .logoutBtn {
   color: var(--text-secondary);
   display: flex;
   align-items: center;
-  transition: color 0.2s;
+  transition: all 0.2s;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .logoutBtn:hover {
   color: var(--error-color);
+  background: #fee2e2;
 }

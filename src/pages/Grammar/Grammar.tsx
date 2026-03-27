@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { mockGrammar } from '../data/tests';
+import { mockGrammar } from '../../data/tests';
 import { ArrowLeft, Edit3, ChevronDown } from 'lucide-react';
 import styles from './Grammar.module.css';
 

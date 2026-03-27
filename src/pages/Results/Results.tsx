@@ -1,30 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { mockTests } from '../data/tests';
+import { mockTests } from '../../data/tests';
 import { CheckCircle2, XCircle, RotateCcw, Home as HomeIcon } from 'lucide-react';
 import styles from './Results.module.css';
+import type { TestResult } from '../../types';
 
 const Results: React.FC = () => {
   const { testId } = useParams<{ testId: string }>();
   const test = mockTests.find((t) => t.id === testId);
-  const [result, setResult] = useState<any>(null);
-
-  useEffect(() => {
+  const [result] = useState<TestResult | null>(() => {
     const savedResult = localStorage.getItem(`result_${testId}`);
-    if (savedResult) {
-      setResult(JSON.parse(savedResult));
-    }
-  }, [testId]);
+    return savedResult ? JSON.parse(savedResult) : null;
+  });
 
   if (!test || !result) {
-    return <div>Result not found.</div>;
+    return (
+      <div className={styles.results}>
+        <div className={styles.header}>
+          <h2>Result not found.</h2>
+          <Link to="/" className={styles.homeButton}>
+            <HomeIcon size={20} />
+            Back to Home
+          </Link>
+        </div>
+      </div>
+    );
   }
 
-  const correctCount = test.questions.reduce((acc, q) => {
-    return result.answers[q.id] === q.correctAnswer ? acc + 1 : acc;
-  }, 0);
-
-  const scorePercentage = Math.round((correctCount / test.questions.length) * 100);
+  const scorePercentage = Math.round((result.score / result.totalQuestions) * 100);
 
   return (
     <div className={styles.results}>
@@ -36,7 +39,7 @@ const Results: React.FC = () => {
           </div>
           <div className={styles.stats}>
             <div className={styles.statItem}>
-              <span className={styles.statValue}>{correctCount}/{test.questions.length}</span>
+              <span className={styles.statValue}>{result.score}/{result.totalQuestions}</span>
               <span className={styles.statLabel}>Correct</span>
             </div>
             <div className={styles.statItem}>
@@ -62,8 +65,9 @@ const Results: React.FC = () => {
         <h2 className={styles.sectionTitle}>Question Review</h2>
         <div className={styles.questionList}>
           {test.questions.map((q, idx) => {
-            const userAnswer = result.answers[q.id];
-            const isCorrect = userAnswer === q.correctAnswer;
+            const userAnswerObj = result.answers.find(a => a.questionId === q.id);
+            const userAnswer = userAnswerObj?.selectedAnswer || '';
+            const isCorrect = userAnswerObj?.isCorrect || false;
             
             return (
               <div key={q.id} className={`${styles.reviewCard} ${isCorrect ? styles.correct : styles.incorrect}`}>

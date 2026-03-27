@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, Lock, User, ArrowRight, BookOpen } from 'lucide-react';
-import styles from './Login.module.css'; // Dùng chung style với Login để đồng bộ
+import { Mail, Lock, User as UserIcon, ArrowRight, BookOpen } from 'lucide-react';
+import styles from '../Login/Login.module.css'; // Dùng chung style với Login để đồng bộ
+import type { User } from '../../types';
 
 const Signup: React.FC = () => {
   const [name, setName] = useState('');
@@ -14,14 +15,14 @@ const Signup: React.FC = () => {
     e.preventDefault();
     
     // Kiểm tra xem email đã tồn tại chưa
-    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
-    if (existingUsers.find((u: any) => u.email === email)) {
+    const existingUsers: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+    if (existingUsers.find((u: User) => u.email === email)) {
       setError('Email already exists. Please use another one.');
       return;
     }
 
     // Lưu người dùng mới
-    const newUser = { name, email, password };
+    const newUser: User = { name, email, password };
     existingUsers.push(newUser);
     localStorage.setItem('users', JSON.stringify(existingUsers));
     
@@ -50,7 +51,7 @@ const Signup: React.FC = () => {
           <div className={styles.inputGroup}>
             <label htmlFor="name">Full Name</label>
             <div className={styles.inputWrapper}>
-              <User className={styles.inputIcon} size={20} />
+              <UserIcon className={styles.inputIcon} size={20} />
               <input
                 type="text"
                 id="name"

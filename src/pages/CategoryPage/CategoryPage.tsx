@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { mockTests } from '../data/tests';
+import { mockTests } from '../../data/tests';
 import { Clock, BookOpen, ChevronRight, ArrowLeft, ChevronLeft, Calendar } from 'lucide-react';
 import styles from './CategoryPage.module.css';
 

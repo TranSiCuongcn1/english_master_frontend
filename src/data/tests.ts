@@ -1,7 +1,6 @@
-import type { Test, Flashcard } from '../types';
+import type { Test, Flashcard, VocabularyTopic, GrammarTopic, ReadingPassage } from '../types';
 
 export const mockTests: Test[] = [
-  // ... existing tests
   {
     id: 'toeic-reading-01',
     title: 'TOEIC Reading Practice 01',
@@ -9,7 +8,7 @@ export const mockTests: Test[] = [
     category: 'TOEIC',
     year: 2026,
     durationMinutes: 45,
-    totalQuestions: 10,
+    totalQuestions: 5,
     questions: [
       {
         id: 'q1',
@@ -19,123 +18,88 @@ export const mockTests: Test[] = [
         correctAnswer: 'postpone',
         explanation: 'After "decided to", use the base form of the verb.',
         part: 5
+      },
+      {
+        id: 'q2',
+        type: 'multiple-choice',
+        text: 'Ms. Lee has been working --- than anyone else in the department.',
+        options: ['hard', 'harder', 'hardest', 'hardly'],
+        correctAnswer: 'harder',
+        explanation: 'Comparative degree is needed here because of "than".',
+        part: 5
+      },
+      {
+        id: 'q3',
+        type: 'multiple-choice',
+        text: 'The new policy will be --- starting next Monday.',
+        options: ['effective', 'effect', 'effectively', 'effectiveness'],
+        correctAnswer: 'effective',
+        explanation: 'The adjective "effective" follows the verb "be".',
+        part: 5
+      },
+      {
+        id: 'q4',
+        type: 'multiple-choice',
+        text: 'Please --- your application by the end of the day.',
+        options: ['submit', 'submits', 'submitting', 'submitted'],
+        correctAnswer: 'submit',
+        explanation: 'Imperative sentence starts with a base verb.',
+        part: 5
+      },
+      {
+        id: 'q5',
+        type: 'multiple-choice',
+        text: 'The results of the study were --- than we had anticipated.',
+        options: ['better', 'good', 'best', 'well'],
+        correctAnswer: 'better',
+        explanation: 'Comparative "better" is used with "than".',
+        part: 5
       }
     ]
   },
   {
-    id: 'toeic-02',
-    title: 'TOEIC Practice Test 02',
-    description: 'Grammar and Vocabulary focus.',
+    id: 'toeic-full-01',
+    title: 'TOEIC Full Reading Test 2026',
+    description: 'A comprehensive TOEIC Reading exam covering all parts (5, 6, and 7).',
     category: 'TOEIC',
     year: 2026,
-    durationMinutes: 45,
-    totalQuestions: 1,
-    questions: []
-  },
-  {
-    id: 'toeic-03',
-    title: 'TOEIC Practice Test 03',
-    description: 'Listening and Reading comprehension.',
-    category: 'TOEIC',
-    year: 2026,
-    durationMinutes: 45,
-    totalQuestions: 1,
-    questions: []
-  },
-  {
-    id: 'toeic-04',
-    title: 'TOEIC Practice Test 04',
-    description: 'Full mock exam.',
-    category: 'TOEIC',
-    year: 2023,
-    durationMinutes: 120,
-    totalQuestions: 1,
-    questions: []
-  },
-  {
-    id: 'toeic-05',
-    title: 'TOEIC Practice Test 05',
-    description: 'Short practice.',
-    category: 'TOEIC',
-    year: 2022,
-    durationMinutes: 30,
-    totalQuestions: 1,
-    questions: []
-  },
-  {
-    id: 'toeic-06',
-    title: 'TOEIC Practice Test 06',
-    description: 'Grammar focus.',
-    category: 'TOEIC',
-    year: 2026,
-    durationMinutes: 45,
-    totalQuestions: 1,
-    questions: []
-  },
-  {
-    id: 'toeic-07',
-    title: 'TOEIC Practice Test 07',
-    description: 'Reading focus.',
-    category: 'TOEIC',
-    year: 2026,
-    durationMinutes: 45,
-    totalQuestions: 1,
-    questions: []
-  },
-  {
-    id: 'toeic-08',
-    title: 'TOEIC Practice Test 08',
-    description: 'Vocabulary focus.',
-    category: 'TOEIC',
-    year: 2026,
-    durationMinutes: 45,
-    totalQuestions: 1,
-    questions: []
-  },
-  {
-    id: 'toeic-09',
-    title: 'TOEIC Practice Test 09',
-    description: 'Sentence completion.',
-    category: 'TOEIC',
-    year: 2026,
-    durationMinutes: 45,
-    totalQuestions: 1,
-    questions: []
-  },
-  {
-    id: 'toeic-10',
-    title: 'TOEIC Practice Test 10',
-    description: 'Text completion.',
-    category: 'TOEIC',
-    year: 2026,
-    durationMinutes: 45,
-    totalQuestions: 1,
-    questions: []
-  },
-  {
-    id: 'toeic-11',
-    title: 'TOEIC Practice Test 11 (Page 2)',
-    description: 'This test should appear on the second page.',
-    category: 'TOEIC',
-    year: 2026,
-    durationMinutes: 45,
-    totalQuestions: 1,
-    questions: []
-  },
-  {
-    id: 'toeic-12',
-    title: 'TOEIC Practice Test 12 (Page 2)',
-    description: 'Another test on page 2.',
-    category: 'TOEIC',
-    year: 2026,
-    durationMinutes: 45,
-    totalQuestions: 1,
-    questions: []
+    durationMinutes: 75,
+    totalQuestions: 10,
+    questions: [
+      {
+        id: 'tf1',
+        type: 'multiple-choice',
+        text: 'Employees are required to wear their ID badges at all ---.',
+        options: ['times', 'time', 'timing', 'timely'],
+        correctAnswer: 'times',
+        explanation: '"At all times" is a fixed phrase meaning always.',
+        part: 5
+      },
+      {
+        id: 'tf2',
+        type: 'multiple-choice',
+        text: 'The company is looking for a candidate who is --- in three languages.',
+        options: ['fluent', 'fluency', 'fluently', 'fluid'],
+        correctAnswer: 'fluent',
+        explanation: '"Fluent" is the adjective modifying the candidate.',
+        part: 5
+      },
+      {
+        id: 'tf3',
+        type: 'multiple-choice',
+        text: 'The seminar was --- cancelled due to low registration.',
+        options: ['unavoidably', 'unavoidable', 'unavoidability', 'avoid'],
+        correctAnswer: 'unavoidably',
+        explanation: 'The adverb "unavoidably" modifies the verb "cancelled".',
+        part: 5
+      }
+      // ... more questions would be here in a real app
+    ]
   },
   {
     id: 'ielts-reading-01',
-    title: 'IELTS Reading Mock Test',
-    description: 'Academic Reading - Passage 1: The History of Modern Architecture.',
+    title: 'IELTS Academic Reading Mock 01',
+    description: 'Academic Reading - Passage 1: The Evolution of Language.',
     category: 'IELTS',
     year: 2026,
     durationMinutes: 60,
@@ -144,56 +108,46 @@ export const mockTests: Test[] = [
       {
         id: 'i1',
         type: 'multiple-choice',
-        text: 'What was the primary material used in early modern architecture?',
-        options: ['Concrete', 'Steel', 'Wood', 'Glass'],
-        correctAnswer: 'Steel',
-        explanation: 'Steel was the major innovation that allowed for vertical construction.',
+        text: 'According to the text, language evolved primarily for:',
+        options: ['Social bonding', 'Hunting coordination', 'Artistic expression', 'Trade'],
+        correctAnswer: 'Social bonding',
+        explanation: 'The first paragraph states language helped early humans maintain social groups.',
         part: 1
       },
       {
         id: 'i2',
         type: 'multiple-choice',
-        text: 'Which architect is mentioned as a pioneer of the International Style?',
-        options: ['Le Corbusier', 'Frank Lloyd Wright', 'Gaudi', 'Zaha Hadid'],
-        correctAnswer: 'Le Corbusier',
-        explanation: 'Le Corbusier is central to the development of the International Style.',
+        text: 'Which theory suggests language is an innate human ability?',
+        options: ['Chomskyan Theory', 'Behaviorism', 'Evolutionary Theory', 'Sociolinguistics'],
+        correctAnswer: 'Chomskyan Theory',
+        explanation: 'Noam Chomsky proposed that humans are born with an innate "language acquisition device".',
         part: 1
       }
     ]
   },
   {
-    id: 'hsk-1-01',
-    title: 'HSK 1 Mock Test',
-    description: 'Chinese Language Proficiency Test Level 1.',
-    category: 'HSK',
-    year: 2025,
-    durationMinutes: 35,
-    totalQuestions: 2,
+    id: 'ielts-reading-02',
+    title: 'IELTS Academic Reading Mock 02',
+    description: 'Academic Reading - Passage 2: Sustainable Urban Planning.',
+    category: 'IELTS',
+    year: 2026,
+    durationMinutes: 60,
+    totalQuestions: 5,
     questions: [
       {
-        id: 'h1',
+        id: 'ir2-1',
         type: 'multiple-choice',
-        text: 'Meaning of "你好" (Nǐ hǎo)?',
-        options: ['Goodbye', 'Hello', 'Thank you', 'Sorry'],
-        correctAnswer: 'Hello',
-        explanation: '"你好" is the standard greeting in Chinese.',
-        part: 1
-      },
-      {
-        id: 'h2',
-        type: 'multiple-choice',
-        text: 'Identify the character for "Teacher":',
-        options: ['学生', '老师', '医生', '朋友'],
-        correctAnswer: '老师',
-        explanation: '"老师" (Lǎoshī) means teacher.',
-        part: 1
+        text: 'What is "compact city" development?',
+        options: ['High-density residential areas', 'Small cities only', 'Underground construction', 'Floating cities'],
+        correctAnswer: 'High-density residential areas',
+        explanation: 'The text defines compact cities as those with high-density land use.',
+        part: 2
       }
     ]
   }
 ];
 
 export const mockFlashcards: Flashcard[] = [
-  // ... existing flashcards
   {
     id: 'f1',
     front: 'Postpone',
@@ -217,7 +171,7 @@ export const mockFlashcards: Flashcard[] = [
   }
 ];
 
-export const mockVocabulary: any[] = [
+export const mockVocabulary: VocabularyTopic[] = [
   {
     id: 'business-comm',
     title: 'Business Communication',
@@ -238,7 +192,7 @@ export const mockVocabulary: any[] = [
   }
 ];
 
-export const mockGrammar: any[] = [
+export const mockGrammar: GrammarTopic[] = [
   {
     id: 'present-perfect',
     title: 'Present Perfect Tense',
@@ -259,7 +213,7 @@ export const mockGrammar: any[] = [
   }
 ];
 
-export const mockReading: any[] = [
+export const mockReading: ReadingPassage[] = [
   {
     id: 'r1',
     title: 'The Future of AI',

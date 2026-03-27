@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { mockVocabulary } from '../data/tests';
+import { mockVocabulary } from '../../data/tests';
 import { ArrowLeft, Book, ChevronRight } from 'lucide-react';
 import styles from './Vocabulary.module.css';
 
@@ -28,7 +28,7 @@ const Vocabulary: React.FC = () => {
             <p className={styles.topicDesc}>{topic.description}</p>
             
             <div className={styles.wordList}>
-              {topic.words.slice(0, 3).map((w: any, idx: number) => (
+              {topic.words.slice(0, 3).map((w, idx) => (
                 <div key={idx} className={styles.wordItem}>
                   <span className={styles.wordName}>{w.word}</span>
                   <span className={styles.wordType}>{w.type}</span>

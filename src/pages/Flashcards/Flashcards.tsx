@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { mockFlashcards } from '../data/tests';
+import { mockFlashcards } from '../../data/tests';
 import { ArrowLeft, RotateCw, ChevronLeft, ChevronRight } from 'lucide-react';
 import styles from './Flashcards.module.css';
 

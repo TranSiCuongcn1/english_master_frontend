@@ -7,7 +7,7 @@ import {
   Library,
   ArrowRight
 } from 'lucide-react';
-import styles from './Home.module.css';
+import styles from './../Home/Home.module.css';
 
 const TestsHub: React.FC = () => {
   const categories = [

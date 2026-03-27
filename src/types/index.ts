@@ -55,6 +55,13 @@ export interface ReadingPassage {
   questions: Question[];
 }
 
+export interface User {
+  name: string;
+  email: string;
+  password?: string;
+  role?: 'user' | 'admin';
+}
+
 export interface UserAnswer {
   questionId: string;
   selectedAnswer: string;
@@ -68,4 +75,22 @@ export interface TestResult {
   timeTakenSeconds: number;
   answers: UserAnswer[];
   date: string;
+  userEmail?: string;
+}
+
+export interface Notification {
+  id: string;
+  title: string;
+  message: string;
+  type: 'info' | 'success' | 'warning';
+  date: string;
+  isRead: boolean;
+}
+
+export interface LeaderboardEntry {
+  userEmail: string;
+  userName: string;
+  totalTests: number;
+  avgAccuracy: number;
+  totalScore: number;
 }
