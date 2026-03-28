@@ -15,21 +15,27 @@ const Login: React.FC = () => {
     
     let users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
     
-    // Khởi tạo tài khoản mặc định nếu chưa có
+    // Đảm bảo luôn có các tài khoản mặc định nếu danh sách trống
+    const defaultUsers = [
+      { name: 'Regular User', email: 'user@example.com', password: 'user123', role: 'user' },
+      { name: 'System Admin', email: 'admin@example.com', password: 'admin123', role: 'admin' }
+    ];
+
     if (users.length === 0) {
-      users = [
-        { name: 'Regular User', email: 'user@example.com', password: 'password123', role: 'user' } as any,
-        { name: 'System Admin', email: 'admin@example.com', password: 'admin123', role: 'admin' } as any
-      ];
+      users = defaultUsers as any;
       localStorage.setItem('users', JSON.stringify(users));
     }
 
     const user = users.find((u: User) => u.email === email && u.password === password);
 
     if (user) {
-      localStorage.setItem('currentUser', JSON.stringify({ name: user.name, email: user.email }));
+      localStorage.setItem('currentUser', JSON.stringify({ 
+        name: user.name, 
+        email: user.email,
+        role: (user as any).role || 'user' 
+      }));
       navigate('/');
-      window.location.reload(); // Refresh to update Navbar
+      window.location.reload();
     } else {
       setError('Invalid email or password');
     }

@@ -72,6 +72,12 @@
   color: var(--text-secondary);
   font-size: 0.95rem;
   margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 3rem;
 }
 
 .wordList {
