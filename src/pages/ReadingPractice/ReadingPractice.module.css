@@ -1,12 +1,11 @@
 .container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  max-width: var(--max-width);
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 .header {
   margin-bottom: 40px;
-  text-align: center;
 }
 
 .backLink {
@@ -14,36 +13,52 @@
   align-items: center;
   gap: 8px;
   color: var(--text-secondary);
-  font-weight: 500;
-  margin-bottom: 16px;
-  justify-content: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  width: fit-content;
+  margin-bottom: 24px;
+  transition: all 0.2s;
+}
+
+.backLink:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  background: var(--primary-light);
 }
 
 .title {
   font-size: 2.5rem;
   font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
 }
 
 .readingGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-  gap: 24px;
-}
-
-@media (max-width: 600px) {
-  .readingGrid {
-    grid-template-columns: 1fr;
-  }
+  gap: 32px;
 }
 
 .articleCard {
-  background-color: var(--bg-card);
-  border-radius: 20px;
-  padding: 30px;
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 32px;
+  transition: all 0.3s;
+}
+
+.articleCard:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary-color);
   box-shadow: var(--shadow-md);
-  display: flex;
-  flex-direction: column;
 }
 
 .articleHeader {
@@ -56,8 +71,7 @@
 .articleTitle {
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--text-main);
-  flex: 1;
+  line-height: 1.3;
 }
 
 .articleMeta {
@@ -66,47 +80,46 @@
   gap: 6px;
   color: var(--text-secondary);
   font-size: 0.85rem;
-  background-color: var(--bg-main);
-  padding: 4px 12px;
-  border-radius: 20px;
+  background: var(--bg-main);
+  padding: 6px 12px;
+  border-radius: 100px;
 }
 
 .excerpt {
   color: var(--text-secondary);
   line-height: 1.7;
-  margin-bottom: 30px;
-  font-size: 1.05rem;
+  margin-bottom: 32px;
 }
 
 .articleFooter {
-  margin-top: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-color);
 }
 
 .questionCount {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  font-weight: 500;
+  gap: 8px;
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 0.95rem;
 }
 
 .readBtn {
-  background: var(--gradient-primary);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 600;
   display: flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  background: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: all 0.2s;
 }
 
 .readBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.3);
+  background: var(--primary-hover);
 }

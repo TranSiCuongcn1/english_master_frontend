@@ -1,12 +1,11 @@
 .container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  max-width: var(--max-width);
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 .header {
   margin-bottom: 40px;
-  text-align: center;
 }
 
 .backLink {
@@ -14,37 +13,59 @@
   align-items: center;
   gap: 8px;
   color: var(--text-secondary);
-  font-weight: 500;
-  margin-bottom: 16px;
-  justify-content: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  width: fit-content;
+  margin-bottom: 24px;
+  transition: all 0.2s;
+}
+
+.backLink:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  background: var(--primary-light);
 }
 
 .title {
   font-size: 2.5rem;
   font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
 }
 
 .grammarList {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .grammarCard {
-  background-color: var(--bg-card);
-  border-radius: 16px;
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  transition: all 0.3s;
+}
+
+.grammarCard:hover {
+  border-color: var(--primary-color);
 }
 
 .cardHeader {
-  padding: 24px;
+  padding: 24px 32px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: var(--bg-main);
   cursor: pointer;
-  background-color: white;
 }
 
 .topicInfo {
@@ -59,26 +80,23 @@
 
 .topicTitle {
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .cardBody {
-  padding: 0 24px 24px;
-  border-top: 1px solid var(--border-color);
-  padding-top: 24px;
+  padding: 32px;
 }
 
 .content {
   font-size: 1.1rem;
-  line-height: 1.8;
+  line-height: 1.7;
   color: var(--text-main);
-  margin-bottom: 24px;
+  margin-bottom: 32px;
 }
 
 .exampleSection h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 12px;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
   color: var(--primary-color);
 }
 
@@ -86,22 +104,27 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-bottom: 30px;
+  gap: 12px;
 }
 
 .exampleList li {
-  padding: 12px 16px;
-  background-color: var(--bg-main);
+  padding: 16px;
+  background: var(--primary-light);
+  border-radius: 12px;
   border-left: 4px solid var(--primary-color);
-  border-radius: 0 8px 8px 0;
-  font-style: italic;
+  font-weight: 500;
 }
 
 .practiceBtn {
-  background: var(--gradient-primary);
+  margin-top: 32px;
+  background: var(--primary-color);
   color: white;
   padding: 12px 24px;
-  border-radius: 10px;
-  font-weight: 600;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.practiceBtn:hover {
+  background: var(--primary-hover);
 }

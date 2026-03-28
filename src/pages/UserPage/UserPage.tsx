@@ -10,18 +10,27 @@ import {
   Target,
   ChevronRight,
   Eye,
-  EyeOff
+  EyeOff,
+  Plus,
+  Trash2,
+  BookOpen,
+  Save
 } from 'lucide-react';
 import styles from './UserPage.module.css';
-import type { User, TestResult } from '../../types';
+import type { User, TestResult, UserFlashcard } from '../../types';
 import { mockTests } from '../../data/tests';
 
 const UserPage: React.FC = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'profile' | 'security'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'profile' | 'security' | 'my-cards'>('dashboard');
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [results, setResults] = useState<TestResult[]>([]);
+  const [userCards, setUserCards] = useState<UserFlashcard[]>([]);
   
+  // Flashcard form states
+  const [showCardForm, setShowCardForm] = useState(false);
+  const [newCard, setNewCard] = useState({ front: '', back: '', example: '' });
+
   // Form states
   const [name, setName] = useState('');
   const [currentPassword, setCurrentPassword] = useState('');
@@ -49,7 +58,40 @@ const UserPage: React.FC = () => {
       }
     }
     setResults(allResults.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
+
+    // Load personal flashcards
+    const storedCards = JSON.parse(localStorage.getItem(`cards_${parsedUser.email}`) || '[]');
+    setUserCards(storedCards);
   }, [navigate]);
+
+  const handleAddCard = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!currentUser) return;
+
+    const card: UserFlashcard = {
+      id: Date.now().toString(),
+      front: newCard.front,
+      back: newCard.back,
+      example: newCard.example,
+      userEmail: currentUser.email,
+      createdAt: new Date().toISOString()
+    };
+
+    const updated = [card, ...userCards];
+    setUserCards(updated);
+    localStorage.setItem(`cards_${currentUser.email}`, JSON.stringify(updated));
+    setNewCard({ front: '', back: '', example: '' });
+    setShowCardForm(false);
+    setMessage({ type: 'success', text: 'New card added to your library!' });
+    setTimeout(() => setMessage({ type: '', text: '' }), 3000);
+  };
+
+  const deleteCard = (id: string) => {
+    if (!currentUser) return;
+    const updated = userCards.filter(c => c.id !== id);
+    setUserCards(updated);
+    localStorage.setItem(`cards_${currentUser.email}`, JSON.stringify(updated));
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('currentUser');
@@ -134,6 +176,13 @@ const UserPage: React.FC = () => {
           >
             <History size={20} />
             Learning Dashboard
+          </button>
+          <button 
+            className={`${styles.navItem} ${activeTab === 'my-cards' ? styles.active : ''}`}
+            onClick={() => setActiveTab('my-cards')}
+          >
+            <BookOpen size={20} />
+            My Private Flashcards
           </button>
           <button 
             className={`${styles.navItem} ${activeTab === 'profile' ? styles.active : ''}`}
@@ -222,6 +271,80 @@ const UserPage: React.FC = () => {
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'my-cards' && (
+          <div className={styles.cardsDashboard}>
+            <div className={styles.tabHeader}>
+              <h2 className={styles.pageTitle}>Personal Vocabulary Cards</h2>
+              <button className={styles.addBtnSmall} onClick={() => setShowCardForm(!showCardForm)}>
+                {showCardForm ? 'Cancel' : <><Plus size={18} /> Create New Card</>}
+              </button>
+            </div>
+
+            {showCardForm && (
+              <form className={styles.personalCardForm} onSubmit={handleAddCard}>
+                <div className={styles.formGrid}>
+                  <div className={styles.inputGroup}>
+                    <label>Word / Phrase (Front)</label>
+                    <input 
+                      value={newCard.front} 
+                      onChange={e => setNewCard({...newCard, front: e.target.value})} 
+                      placeholder="e.g. Persistence" required 
+                    />
+                  </div>
+                  <div className={styles.inputGroup}>
+                    <label>Meaning (Back)</label>
+                    <input 
+                      value={newCard.back} 
+                      onChange={e => setNewCard({...newCard, back: e.target.value})} 
+                      placeholder="e.g. Sự kiên trì" required 
+                    />
+                  </div>
+                </div>
+                <div className={styles.inputGroup}>
+                  <label>Usage Example</label>
+                  <textarea 
+                    value={newCard.example} 
+                    onChange={e => setNewCard({...newCard, example: e.target.value})} 
+                    placeholder="e.g. Success requires a great deal of persistence."
+                    rows={2}
+                  />
+                </div>
+                <button type="submit" className={styles.saveCardBtn}>
+                  <Save size={18} /> Save to Private Library
+                </button>
+              </form>
+            )}
+
+            <div className={styles.userCardsGrid}>
+              {userCards.map(card => (
+                <div key={card.id} className={styles.privateCard}>
+                  <div className={styles.cardHeader}>
+                    <h4>{card.front}</h4>
+                    <button className={styles.deleteCardBtn} onClick={() => deleteCard(card.id)}>
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                  <div className={styles.cardContent}>
+                    <p className={styles.backLabel}>Meaning:</p>
+                    <p className={styles.backValue}>{card.back}</p>
+                    {card.example && (
+                      <div className={styles.exampleBox}>
+                        <span>"{card.example}"</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+              {userCards.length === 0 && !showCardForm && (
+                <div className={styles.emptyCards}>
+                  <BookOpen size={64} />
+                  <p>Your private library is empty. Start adding cards to practice!</p>
+                </div>
+              )}
             </div>
           </div>
         )}

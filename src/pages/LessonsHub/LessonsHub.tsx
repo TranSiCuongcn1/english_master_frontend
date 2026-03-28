@@ -1,15 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   CreditCard,
   Type,
   PenTool,
   ArrowRight,
-  BookMarked
+  BookMarked,
+  ArrowLeft
 } from 'lucide-react';
 import styles from '../Home/Home.module.css';
 
 const LessonsHub: React.FC = () => {
+  const navigate = useNavigate();
   const categories = [
     { 
       id: 'flashcards', 
@@ -43,6 +45,10 @@ const LessonsHub: React.FC = () => {
 
   return (
     <div className={styles.home}>
+      <button onClick={() => navigate(-1)} className={styles.backBtn}>
+        <ArrowLeft size={20} />
+        Back
+      </button>
       <header className={styles.header}>
         <h1 className={styles.title}>Learning Material</h1>
         <p className={styles.subtitle}>Daily lessons to improve your language skills.</p>

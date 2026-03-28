@@ -95,7 +95,6 @@
 
 .logout:hover {
   background: #fee2e2;
-  color: var(--error-color);
 }
 
 /* Content Styles */
@@ -120,17 +119,8 @@
   font-size: 0.95rem;
 }
 
-.success {
-  background: #dcfce7;
-  color: #166534;
-  border: 1px solid #bbf7d0;
-}
-
-.error {
-  background: #fee2e2;
-  color: #991b1b;
-  border: 1px solid #fecaca;
-}
+.success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
 
 /* Dashboard Stats */
 .statsGrid {
@@ -175,18 +165,100 @@
   color: var(--text-secondary);
 }
 
-/* History List */
-.sectionTitle {
-  font-size: 1.25rem;
-  margin-bottom: 20px;
-}
-
-.historyList {
+/* My Flashcards Tab */
+.tabHeader {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
 }
 
+.addBtnSmall {
+  background: var(--primary-color);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.personalCardForm {
+  background: var(--bg-main);
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 32px;
+  border: 1px solid var(--border-color);
+}
+
+.formGrid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+
+.saveCardBtn {
+  margin-top: 16px;
+  background: var(--primary-color);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.privateCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.2s;
+}
+
+.privateCard:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.cardHeader h4 { font-size: 1.2rem; color: var(--primary-color); }
+
+.deleteCardBtn { color: var(--text-secondary); }
+.deleteCardBtn:hover { color: var(--error-color); }
+
+.backLabel { font-size: 0.75rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 700; }
+.backValue { font-size: 1.1rem; font-weight: 600; margin-bottom: 12px; }
+
+.exampleBox {
+  padding: 10px;
+  background: var(--bg-main);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.emptyCards {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px;
+  color: var(--text-secondary);
+}
+
+/* History List */
 .historyItem {
   display: flex;
   justify-content: space-between;
@@ -196,6 +268,7 @@
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
+  margin-bottom: 12px;
 }
 
 .historyItem:hover {
@@ -204,53 +277,13 @@
   background: var(--primary-light);
 }
 
-.historyInfo h4 {
-  margin-bottom: 4px;
-}
+.historyScore { font-weight: 700; color: var(--primary-color); font-size: 1.1rem; }
 
-.historyInfo span {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
-.historyResult {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.historyScore {
-  font-weight: 700;
-  color: var(--primary-color);
-  font-size: 1.1rem;
-}
-
-.emptyState {
-  text-align: center;
-  padding: 40px;
-  color: var(--text-secondary);
-}
-
-/* Forms */
-.form {
-  max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.inputGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.inputGroup label {
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.inputGroup input {
+/* General Form Styles */
+.form { max-width: 500px; display: flex; flex-direction: column; gap: 20px; }
+.inputGroup { display: flex; flex-direction: column; gap: 8px; }
+.inputGroup label { font-weight: 600; font-size: 0.9rem; }
+.inputGroup input, .inputGroup textarea {
   padding: 12px 16px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -259,32 +292,7 @@
   font-size: 1rem;
 }
 
-.disabledInput {
-  background: var(--secondary-color) !important;
-  color: var(--text-secondary) !important;
-  cursor: not-allowed;
-}
-
-.inputHint {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-}
-
-.passwordWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.passwordWrapper input {
-  width: 100%;
-}
-
-.togglePass {
-  position: absolute;
-  right: 12px;
-  color: var(--text-secondary);
-}
+.disabledInput { background: var(--secondary-color) !important; cursor: not-allowed; }
 
 .primaryBtn {
   padding: 12px 24px;
@@ -295,20 +303,13 @@
   margin-top: 10px;
 }
 
-.primaryBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
+.passwordWrapper { position: relative; display: flex; align-items: center; }
+.passwordWrapper input { width: 100%; }
+.togglePass { position: absolute; right: 12px; color: var(--text-secondary); }
 
 @media (max-width: 900px) {
-  .container {
-    flex-direction: column;
-  }
-  .sidebar {
-    width: 100%;
-    position: static;
-  }
-  .statsGrid {
-    grid-template-columns: 1fr;
-  }
+  .container { flex-direction: column; }
+  .sidebar { width: 100%; position: static; }
+  .statsGrid { grid-template-columns: 1fr; }
+  .formGrid { grid-template-columns: 1fr; }
 }

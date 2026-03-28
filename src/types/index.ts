@@ -62,6 +62,15 @@ export interface User {
   role?: 'user' | 'admin';
 }
 
+export interface UserFlashcard {
+  id: string;
+  front: string;
+  back: string;
+  example?: string;
+  userEmail: string;
+  createdAt: string;
+}
+
 export interface UserAnswer {
   questionId: string;
   selectedAnswer: string;

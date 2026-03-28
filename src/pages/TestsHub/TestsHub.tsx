@@ -1,15 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   BookOpen, 
   GraduationCap, 
   Languages, 
   Library,
-  ArrowRight
+  ArrowRight,
+  ArrowLeft
 } from 'lucide-react';
 import styles from './../Home/Home.module.css';
 
 const TestsHub: React.FC = () => {
+  const navigate = useNavigate();
   const categories = [
     { 
       id: 'toeic', 
@@ -43,6 +45,10 @@ const TestsHub: React.FC = () => {
 
   return (
     <div className={styles.home}>
+      <button onClick={() => navigate(-1)} className={styles.backBtn}>
+        <ArrowLeft size={20} />
+        Back
+      </button>
       <header className={styles.header}>
         <h1 className={styles.title}>Practice Tests</h1>
         <p className={styles.subtitle}>Choose a certification to start your mock exam.</p>

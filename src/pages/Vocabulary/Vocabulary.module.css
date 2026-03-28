@@ -1,12 +1,11 @@
 .container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  max-width: var(--max-width);
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
 .header {
   margin-bottom: 40px;
-  text-align: center;
 }
 
 .backLink {
@@ -14,48 +13,67 @@
   align-items: center;
   gap: 8px;
   color: var(--text-secondary);
-  font-weight: 500;
-  margin-bottom: 16px;
-  justify-content: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  width: fit-content;
+  margin-bottom: 24px;
+  transition: all 0.2s;
+}
+
+.backLink:hover {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+  background: var(--primary-light);
 }
 
 .title {
   font-size: 2.5rem;
   font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
 }
 
 .topicGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 24px;
 }
 
 .topicCard {
-  background-color: var(--bg-card);
-  border-radius: 20px;
-  padding: 24px;
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-md);
-  transition: all 0.3s ease;
+  border-radius: 20px;
+  padding: 32px;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
 }
 
 .topicCard:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px);
   border-color: var(--primary-color);
+  box-shadow: var(--shadow-md);
 }
 
 .topicHeader {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   margin-bottom: 16px;
 }
 
 .topicIcon {
   width: 48px;
   height: 48px;
-  background-color: var(--primary-light);
+  background: var(--primary-light);
   color: var(--primary-color);
   border-radius: 12px;
   display: flex;
@@ -64,40 +82,37 @@
 }
 
 .topicTitle {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 800;
 }
 
 .topicDesc {
   color: var(--text-secondary);
-  font-size: 0.95rem;
-  margin-bottom: 20px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-height: 3rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
 }
 
 .wordList {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 24px;
-  padding: 16px;
-  background-color: var(--bg-main);
+  background: var(--bg-main);
+  padding: 20px;
   border-radius: 12px;
+  margin-bottom: 24px;
 }
 
 .wordItem {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.wordItem:last-child {
+  border-bottom: none;
 }
 
 .wordName {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-main);
 }
 
@@ -110,25 +125,24 @@
 .moreWords {
   font-size: 0.85rem;
   color: var(--primary-color);
-  font-weight: 600;
+  font-weight: 700;
+  margin-top: 12px;
   text-align: center;
 }
 
 .studyBtn {
-  width: 100%;
-  background-color: white;
-  border: 1.5px solid var(--primary-color);
-  color: var(--primary-color);
-  padding: 12px;
-  border-radius: 10px;
-  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  background: var(--primary-color);
+  color: white;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: all 0.2s;
 }
 
 .studyBtn:hover {
-  background-color: var(--primary-color);
-  color: white;
+  background: var(--primary-hover);
 }
