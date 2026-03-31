@@ -4,7 +4,7 @@ import { useTimer } from '../../hooks/useTimer';
 import QuestionCard from '../../components/QuestionCard/QuestionCard';
 import { Clock, Send, ChevronLeft, ChevronRight, Bookmark, Loader2 } from 'lucide-react';
 import styles from './TestTaking.module.css';
-import type { Test, UserAnswer } from '../../types';
+import type { Test } from '../../types';
 import testApi from '../../api/testApi';
 import resultApi from '../../api/resultApi';
 

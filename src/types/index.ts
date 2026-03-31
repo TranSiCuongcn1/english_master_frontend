@@ -31,6 +31,8 @@ export interface Flashcard {
   back: string;
   example?: string;
   category: string;
+  isSystem?: boolean;    // true = hệ thống tạo, false = user tạo
+  createdBy?: string;   // UUID của user tạo card (null nếu là system card)
 }
 
 export interface VocabularyTopic {

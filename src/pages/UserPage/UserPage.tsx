@@ -38,7 +38,7 @@ const UserPage: React.FC = () => {
       .finally(() => setLoadingResults(false));
 
     flashcardApi.getAll()
-      .then(res => setUserCards(res.data.filter((c: { created_by?: string }) => !!c.created_by)))
+      .then(res => setUserCards(res.data.filter(c => c.isSystem === false)))
       .catch(() => setUserCards([]))
       .finally(() => setLoadingCards(false));
   }, []);
