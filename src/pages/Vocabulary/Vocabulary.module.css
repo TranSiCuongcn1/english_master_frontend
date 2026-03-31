@@ -1,148 +1,143 @@
-.container {
-  max-width: var(--max-width);
-  margin: 40px auto;
-  padding: 0 20px;
+.pageWrapper {
+  width: 100%;
 }
 
 .header {
-  margin-bottom: 40px;
-}
-
-.backLink {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-secondary);
-  font-weight: 600;
-  font-size: 0.95rem;
-  padding: 8px 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  width: fit-content;
-  margin-bottom: 24px;
-  transition: all 0.2s;
-}
-
-.backLink:hover {
-  color: var(--primary-color);
-  border-color: var(--primary-color);
-  background: var(--primary-light);
+  margin-bottom: 2.5rem;
 }
 
 .title {
   font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 16px;
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: -0.04em;
 }
 
 .subtitle {
   font-size: 1.1rem;
   color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+.headerMain {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.titleSection {
+  flex: 1;
+}
+
+.searchWrapper {
+  position: relative;
+  flex: 1;
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.searchInput:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.searchInput::placeholder {
+  color: var(--text-secondary);
 }
 
 .topicGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .topicCard {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 32px;
-  transition: all 0.3s;
+  background: var(--bg-main); /* Đổi màu nền card khác với scrollArea */
+  border: 2px solid var(--primary-light); /* Viền màu xanh nhạt */
+  border-radius: 28px; /* Bo góc cực cong */
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
 
 .topicCard:hover {
-  transform: translateY(-8px);
+  transform: translateY(-8px) scale(1.02);
   border-color: var(--primary-color);
-  box-shadow: var(--shadow-md);
-}
-
-.topicHeader {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
+  box-shadow: var(--shadow-lg);
+  background: var(--bg-card);
 }
 
 .topicIcon {
-  width: 48px;
-  height: 48px;
-  background: var(--primary-light);
+  width: 50px;
+  height: 50px;
+  background: white;
   color: var(--primary-color);
-  border-radius: 12px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid var(--primary-light);
+  margin-bottom: 1.5rem;
 }
 
 .topicTitle {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 800;
-}
-
-.topicDesc {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 24px;
-  flex-grow: 1;
-}
-
-.wordList {
-  background: var(--bg-main);
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 24px;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
 }
 
 .wordItem {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.wordItem:last-child {
-  border-bottom: none;
-}
-
-.wordName {
-  font-weight: 700;
-  color: var(--text-main);
-}
-
-.wordType {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  font-style: italic;
-}
-
-.moreWords {
-  font-size: 0.85rem;
-  color: var(--primary-color);
-  font-weight: 700;
-  margin-top: 12px;
-  text-align: center;
+  background: white;
+  padding: 6px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--primary-light);
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 .studyBtn {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 1rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 18px;
+  font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  background: var(--primary-color);
-  color: white;
-  padding: 12px;
-  border-radius: 12px;
-  font-weight: 700;
-  transition: all 0.2s;
+  gap: 10px;
+  transition: 0.3s;
 }
 
 .studyBtn:hover {
   background: var(--primary-hover);
+  box-shadow: 0 8px 20px -6px var(--primary-color);
 }

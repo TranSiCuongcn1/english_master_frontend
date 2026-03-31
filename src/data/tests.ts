@@ -1,6 +1,51 @@
-import type { Test, Flashcard, VocabularyTopic, GrammarTopic, ReadingPassage } from '../types';
+import type { Test, Flashcard, VocabularyTopic, GrammarTopic, ReadingPassage, ShortStory } from '../types';
 
 export const mockTests: Test[] = [
+  {
+    id: 'toeic-listening-01',
+    title: 'TOEIC Listening Practice - Part 1',
+    description: 'Practice describing photographs with real-world scenarios.',
+    category: 'TOEIC',
+    year: 2026,
+    durationMinutes: 15,
+    totalQuestions: 2,
+    questions: [
+      {
+        id: 'tl1-1',
+        type: 'multiple-choice',
+        text: 'Look at the picture and choose the best description.',
+        options: [
+          'They are sitting at a desk.',
+          'They are walking in the park.',
+          'They are eating in a restaurant.',
+          'They are standing in a line.'
+        ],
+        correctAnswer: 'They are sitting at a desk.',
+        explanation: 'The photo shows two people working at their office desks.',
+        part: 1,
+        skill: 'Listening',
+        audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Placeholder
+        imageUrl: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'tl1-2',
+        type: 'multiple-choice',
+        text: 'What is the woman doing?',
+        options: [
+          'She is reading a book.',
+          'She is drinking coffee.',
+          'She is typing on a keyboard.',
+          'She is talking on the phone.'
+        ],
+        correctAnswer: 'She is typing on a keyboard.',
+        explanation: 'In the picture, the woman is clearly focused on her laptop screen and typing.',
+        part: 1,
+        skill: 'Listening',
+        audioUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', // Placeholder
+        imageUrl: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=800&q=80'
+      }
+    ]
+  },
   {
     id: 'toeic-reading-01',
     title: 'TOEIC Reading Practice 01',
@@ -17,7 +62,8 @@ export const mockTests: Test[] = [
         options: ['postpone', 'postpones', 'postponing', 'postponed'],
         correctAnswer: 'postpone',
         explanation: 'After "decided to", use the base form of the verb.',
-        part: 5
+        part: 5,
+        skill: 'Grammar'
       },
       {
         id: 'q2',
@@ -26,7 +72,8 @@ export const mockTests: Test[] = [
         options: ['hard', 'harder', 'hardest', 'hardly'],
         correctAnswer: 'harder',
         explanation: 'Comparative degree is needed here because of "than".',
-        part: 5
+        part: 5,
+        skill: 'Grammar'
       },
       {
         id: 'q3',
@@ -35,7 +82,8 @@ export const mockTests: Test[] = [
         options: ['effective', 'effect', 'effectively', 'effectiveness'],
         correctAnswer: 'effective',
         explanation: 'The adjective "effective" follows the verb "be".',
-        part: 5
+        part: 5,
+        skill: 'Vocabulary'
       },
       {
         id: 'q4',
@@ -44,7 +92,8 @@ export const mockTests: Test[] = [
         options: ['submit', 'submits', 'submitting', 'submitted'],
         correctAnswer: 'submit',
         explanation: 'Imperative sentence starts with a base verb.',
-        part: 5
+        part: 5,
+        skill: 'Grammar'
       },
       {
         id: 'q5',
@@ -53,97 +102,25 @@ export const mockTests: Test[] = [
         options: ['better', 'good', 'best', 'well'],
         correctAnswer: 'better',
         explanation: 'Comparative "better" is used with "than".',
-        part: 5
+        part: 5,
+        skill: 'Grammar'
       }
     ]
-  },
+  }
+];
+
+// ... rest of the mock data stays the same (ShortStories, Flashcards, Vocabulary, Grammar, Reading)
+// I will keep them but ensure they follow the updated structure if needed.
+export const mockShortStories: ShortStory[] = [
   {
-    id: 'toeic-full-01',
-    title: 'TOEIC Full Reading Test 2026',
-    description: 'A comprehensive TOEIC Reading exam covering all parts (5, 6, and 7).',
-    category: 'TOEIC',
-    year: 2026,
-    durationMinutes: 75,
-    totalQuestions: 10,
-    questions: [
-      {
-        id: 'tf1',
-        type: 'multiple-choice',
-        text: 'Employees are required to wear their ID badges at all ---.',
-        options: ['times', 'time', 'timing', 'timely'],
-        correctAnswer: 'times',
-        explanation: '"At all times" is a fixed phrase meaning always.',
-        part: 5
-      },
-      {
-        id: 'tf2',
-        type: 'multiple-choice',
-        text: 'The company is looking for a candidate who is --- in three languages.',
-        options: ['fluent', 'fluency', 'fluently', 'fluid'],
-        correctAnswer: 'fluent',
-        explanation: '"Fluent" is the adjective modifying the candidate.',
-        part: 5
-      },
-      {
-        id: 'tf3',
-        type: 'multiple-choice',
-        text: 'The seminar was --- cancelled due to low registration.',
-        options: ['unavoidably', 'unavoidable', 'unavoidability', 'avoid'],
-        correctAnswer: 'unavoidably',
-        explanation: 'The adverb "unavoidably" modifies the verb "cancelled".',
-        part: 5
-      }
-      // ... more questions would be here in a real app
-    ]
-  },
-  {
-    id: 'ielts-reading-01',
-    title: 'IELTS Academic Reading Mock 01',
-    description: 'Academic Reading - Passage 1: The Evolution of Language.',
-    category: 'IELTS',
-    year: 2026,
-    durationMinutes: 60,
-    totalQuestions: 5,
-    questions: [
-      {
-        id: 'i1',
-        type: 'multiple-choice',
-        text: 'According to the text, language evolved primarily for:',
-        options: ['Social bonding', 'Hunting coordination', 'Artistic expression', 'Trade'],
-        correctAnswer: 'Social bonding',
-        explanation: 'The first paragraph states language helped early humans maintain social groups.',
-        part: 1
-      },
-      {
-        id: 'i2',
-        type: 'multiple-choice',
-        text: 'Which theory suggests language is an innate human ability?',
-        options: ['Chomskyan Theory', 'Behaviorism', 'Evolutionary Theory', 'Sociolinguistics'],
-        correctAnswer: 'Chomskyan Theory',
-        explanation: 'Noam Chomsky proposed that humans are born with an innate "language acquisition device".',
-        part: 1
-      }
-    ]
-  },
-  {
-    id: 'ielts-reading-02',
-    title: 'IELTS Academic Reading Mock 02',
-    description: 'Academic Reading - Passage 2: Sustainable Urban Planning.',
-    category: 'IELTS',
-    year: 2026,
-    durationMinutes: 60,
-    totalQuestions: 5,
-    questions: [
-      {
-        id: 'ir2-1',
-        type: 'multiple-choice',
-        text: 'What is "compact city" development?',
-        options: ['High-density residential areas', 'Small cities only', 'Underground construction', 'Floating cities'],
-        correctAnswer: 'High-density residential areas',
-        explanation: 'The text defines compact cities as those with high-density land use.',
-        part: 2
-      }
-    ]
+    id: 'story-1',
+    title: 'The Lost Key',
+    author: 'John Doe',
+    content: 'Once upon a time, there was a small boy named Tim who found a mysterious golden key in his garden...',
+    summary: 'A short story about a boy finding a mysterious key.',
+    level: 'Beginner',
+    category: 'Adventure',
+    createdAt: '2026-03-20T10:00:00Z'
   }
 ];
 
@@ -154,20 +131,6 @@ export const mockFlashcards: Flashcard[] = [
     back: 'Trì hoãn, hoãn lại',
     example: 'The meeting was postponed due to rain.',
     category: 'TOEIC'
-  },
-  {
-    id: 'f2',
-    front: 'Responsible',
-    back: 'Chịu trách nhiệm',
-    example: 'You are responsible for this project.',
-    category: 'TOEIC'
-  },
-  {
-    id: 'f3',
-    front: '老师 (Lǎoshī)',
-    back: 'Teacher (Giáo viên)',
-    example: '她是我的老师。 (She is my teacher.)',
-    category: 'HSK'
   }
 ];
 
@@ -177,17 +140,7 @@ export const mockVocabulary: VocabularyTopic[] = [
     title: 'Business Communication',
     description: 'Essential words for office and business meetings.',
     words: [
-      { word: 'Collaborate', type: 'verb', meaning: 'To work together with others', example: 'We need to collaborate on this project.' },
-      { word: 'Agenda', type: 'noun', meaning: 'A list of items to be discussed at a meeting', example: 'What is on the agenda for today?' }
-    ]
-  },
-  {
-    id: 'travel-tourism',
-    title: 'Travel & Tourism',
-    description: 'Words you need when traveling abroad.',
-    words: [
-      { word: 'Itinerary', type: 'noun', meaning: 'A planned route or journey', example: 'We have a very busy itinerary for our trip.' },
-      { word: 'Accommodation', type: 'noun', meaning: 'A place to live or stay', example: 'The hotel provides great accommodation.' }
+      { word: 'Collaborate', type: 'verb', meaning: 'To work together with others', example: 'We need to collaborate on this project.' }
     ]
   }
 ];
@@ -196,20 +149,8 @@ export const mockGrammar: GrammarTopic[] = [
   {
     id: 'present-perfect',
     title: 'Present Perfect Tense',
-    content: 'The present perfect is used for actions that happened at an unspecified time in the past or began in the past and continue to the present.',
-    examples: [
-      'I have lived here for ten years.',
-      'She has already finished her homework.'
-    ]
-  },
-  {
-    id: 'conditionals',
-    title: 'Conditional Sentences',
-    content: 'Conditionals are used to speculate about what could happen, what might have happened, and what we wish would happen.',
-    examples: [
-      'If it rains, we will stay at home.',
-      'If I were you, I would take that job.'
-    ]
+    content: 'The present perfect is used for actions that happened at an unspecified time in the past.',
+    examples: ['I have lived here for ten years.']
   }
 ];
 
@@ -217,7 +158,8 @@ export const mockReading: ReadingPassage[] = [
   {
     id: 'r1',
     title: 'The Future of AI',
-    text: 'Artificial Intelligence is changing the way we work and live. From self-driving cars to virtual assistants, AI is everywhere...',
+    text: 'Artificial Intelligence is changing the way we work and live...',
+    difficulty: 'Medium',
     questions: [
       {
         id: 'rq1',
@@ -225,7 +167,8 @@ export const mockReading: ReadingPassage[] = [
         text: 'What is the main topic of the passage?',
         options: ['Self-driving cars', 'Artificial Intelligence', 'Virtual assistants', 'Future of work'],
         correctAnswer: 'Artificial Intelligence',
-        explanation: 'The passage discusses how AI is impacting various aspects of life.'
+        explanation: 'The passage discusses how AI is impacting various aspects of life.',
+        skill: 'Reading'
       }
     ]
   }

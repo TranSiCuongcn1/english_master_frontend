@@ -1,99 +1,200 @@
 .questionCard {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 32px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin-bottom: 24px;
+  background: white;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.5rem;
+  width: 100%;
 }
 
-.questionHeader {
+.cardHeader {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
 }
 
-.questionNumber {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--text-secondary);
+.partBadge, .skillBadge {
+  padding: 0.35rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .partBadge {
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 700;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.skillBadge.listening { background: #e0f2fe; color: #0369a1; }
+.skillBadge.reading { background: #fef9c3; color: #854d0e; }
+.skillBadge.grammar { background: #f0fdf4; color: #166534; }
+.skillBadge.vocabulary { background: #faf5ff; color: #6b21a8; }
+
+.cardBody {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Chia đôi chính xác 50-50 */
+  gap: 3rem;
+  align-items: start;
+}
+
+/* LEFT COLUMN: Media, Question Text */
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mediaContainer {
+  width: 100%;
+  background: #fcfdfe;
+  border: 1px solid #f1f5f9;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.passageContainer {
+  padding: 1.5rem;
+}
+
+.passageContainer h4 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 1rem;
+  letter-spacing: 0.1em;
+}
+
+.passageContent {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #334155;
+}
+
+.imageContainer {
+  width: 100%;
+}
+
+.questionImage {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  display: block;
+}
+
+.audioPlayer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: #f8fafc;
+}
+
+.audioButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.audioInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #64748b;
+  font-size: 0.8rem;
 }
 
 .questionText {
-  font-size: 1.125rem;
-  font-weight: 500;
-  color: var(--text-main);
-  margin-bottom: 32px;
-  line-height: 1.6;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: #1e293b;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.questionNumberLabel {
+  background: #f8fafc;
+  color: #64748b;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  width: fit-content;
+  border: 1px solid #e2e8f0;
+}
+
+/* RIGHT COLUMN: Options Only */
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
 }
 
 .optionsList {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 1rem;
 }
 
 .optionButton {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px 20px;
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  text-align: left;
+  gap: 1rem;
+  padding: 1.25rem;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
   transition: all 0.2s;
-  background-color: transparent;
+  text-align: left;
 }
 
 .optionButton:hover {
-  background-color: var(--bg-main);
-  border-color: var(--primary-color);
+  border-color: #cbd5e1;
+  background: #f8fafc;
 }
 
 .optionButton.selected {
-  background-color: var(--secondary-color);
   border-color: var(--primary-color);
+  background: #eff6ff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
 }
 
 .optionLabel {
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  background-color: var(--bg-main);
-  border: 1px solid var(--border-color);
-  border-radius: 50%;
+  background: #f1f5f9;
+  border-radius: 8px;
   font-weight: 700;
-  font-size: 0.875rem;
-  color: var(--text-secondary);
-  transition: all 0.2s;
+  color: #64748b;
 }
 
-.selected .optionLabel {
-  background-color: var(--primary-color);
-  color: #ffffff;
-  border-color: var(--primary-color);
+.optionButton.selected .optionLabel {
+  background: var(--primary-color);
+  color: white;
 }
 
 .optionContent {
-  font-size: 1rem;
-  color: var(--text-main);
-  font-weight: 400;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: #334155;
 }
 
-.selected .optionContent {
-  font-weight: 600;
+@media (max-width: 1024px) {
+  .cardBody {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }

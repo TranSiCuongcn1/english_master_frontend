@@ -8,6 +8,10 @@ export interface Question {
   correctAnswer: string;
   explanation: string;
   part?: number; // e.g., TOEIC Part 1, Part 2
+  audioUrl?: string;
+  imageUrl?: string;
+  passageText?: string; // Đoạn văn cho bài Reading
+  skill: 'Listening' | 'Reading' | 'Grammar' | 'Vocabulary';
 }
 
 export interface Test {
@@ -52,7 +56,19 @@ export interface ReadingPassage {
   id: string;
   title: string;
   text: string;
+  difficulty: 'Easy' | 'Medium' | 'Hard';
   questions: Question[];
+}
+
+export interface ShortStory {
+  id: string;
+  title: string;
+  author: string;
+  content: string;
+  summary: string;
+  level: 'Beginner' | 'Intermediate' | 'Advanced';
+  category: string;
+  createdAt: string;
 }
 
 export interface User {

@@ -1,39 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ClipboardCheck, 
   BookOpen,
   ArrowRight,
-  Trophy,
-  Users,
   Star,
   Zap,
   CheckCircle,
   Clock
 } from 'lucide-react';
 import styles from './Home.module.css';
-import type { TestResult } from '../../types';
+import type { TestResult, User } from '../../types';
 import { mockTests } from '../../data/tests';
 
 const Home: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
-  const [recentResults, setRecentResults] = useState<TestResult[]>([]);
-
-  useEffect(() => {
+  const [user] = useState<User | null>(() => {
     const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-      
-      const results: TestResult[] = [];
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key?.startsWith('result_')) {
-          results.push(JSON.parse(localStorage.getItem(key)!));
-        }
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  const [recentResults] = useState<TestResult[]>(() => {
+    const savedUser = localStorage.getItem('currentUser');
+    if (!savedUser) return [];
+    
+    const results: TestResult[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key?.startsWith('result_')) {
+        results.push(JSON.parse(localStorage.getItem(key)!));
       }
-      setRecentResults(results.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 2));
     }
-  }, []);
+    return results.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 2);
+  });
 
   return (
     <div className={styles.home}>

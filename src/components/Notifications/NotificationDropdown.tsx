@@ -4,38 +4,35 @@ import styles from './NotificationDropdown.module.css';
 import type { Notification } from '../../types';
 
 const NotificationDropdown: React.FC = () => {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<Notification[]>(() => {
+    const saved = localStorage.getItem('notifications');
+    if (saved) return JSON.parse(saved);
+    
+    const initial: Notification[] = [
+      {
+        id: '1',
+        title: 'Welcome!',
+        message: 'Start your learning journey by taking a TOEIC mock test.',
+        type: 'info',
+        date: new Date().toISOString(),
+        isRead: false
+      },
+      {
+        id: '2',
+        title: 'New Content',
+        message: 'IELTS Academic Reading 02 is now available.',
+        type: 'success',
+        date: new Date().toISOString(),
+        isRead: false
+      }
+    ];
+    localStorage.setItem('notifications', JSON.stringify(initial));
+    return initial;
+  });
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Initial mock notifications if none exist
-    const saved = localStorage.getItem('notifications');
-    if (saved) {
-      setNotifications(JSON.parse(saved));
-    } else {
-      const initial: Notification[] = [
-        {
-          id: '1',
-          title: 'Welcome!',
-          message: 'Start your learning journey by taking a TOEIC mock test.',
-          type: 'info',
-          date: new Date().toISOString(),
-          isRead: false
-        },
-        {
-          id: '2',
-          title: 'New Content',
-          message: 'IELTS Academic Reading 02 is now available.',
-          type: 'success',
-          date: new Date().toISOString(),
-          isRead: false
-        }
-      ];
-      setNotifications(initial);
-      localStorage.setItem('notifications', JSON.stringify(initial));
-    }
-
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);

@@ -16,15 +16,20 @@ export const useTimer = (initialMinutes: number, onTimeUp?: () => void) => {
   useEffect(() => {
     let interval: number | undefined;
 
-    if (state.isActive && state.secondsLeft > 0) {
+    if (state.isActive) {
       interval = window.setInterval(() => {
         setState((prev) => {
-          if (prev.secondsLeft <= 1) {
+          if (prev.secondsLeft <= 0) {
             if (interval) clearInterval(interval);
-            if (onTimeUpRef.current) onTimeUpRef.current();
-            return { secondsLeft: 0, isActive: false };
+            return { ...prev, isActive: false };
           }
-          return { ...prev, secondsLeft: prev.secondsLeft - 1 };
+          
+          const nextSeconds = prev.secondsLeft - 1;
+          if (nextSeconds === 0 && onTimeUpRef.current) {
+            onTimeUpRef.current();
+          }
+          
+          return { ...prev, secondsLeft: nextSeconds };
         });
       }, 1000);
     }

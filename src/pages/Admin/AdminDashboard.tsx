@@ -11,7 +11,6 @@ import {
   ArrowLeft,
   BookOpen,
   Bell,
-  CheckCircle2,
   X,
   Filter,
   Save,
@@ -26,77 +25,74 @@ import {
   Type,
   Layout,
   Mail,
-  Calendar,
-  ChevronRight
+  ImageIcon,
+  Music,
+  Upload
 } from 'lucide-react';
 import styles from './AdminDashboard.module.css';
-import type { User, Test, TestResult, Question, Notification, VocabularyTopic, GrammarTopic, Flashcard } from '../../types';
-import { mockTests, mockVocabulary, mockGrammar, mockFlashcards } from '../../data/tests';
+import type { User, Test, TestResult, Question, Notification, VocabularyTopic, GrammarTopic, Flashcard, ShortStory } from '../../types';
+import { mockTests, mockVocabulary, mockGrammar, mockFlashcards, mockShortStories } from '../../data/tests';
 
 const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'stats' | 'users' | 'tests' | 'lessons' | 'notifications'>('stats');
   
-  const [users, setUsers] = useState<User[]>([]);
-  const [tests, setTests] = useState<Test[]>([]);
-  const [results, setResults] = useState<TestResult[]>([]);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [users, setUsers] = useState<User[]>(() => JSON.parse(localStorage.getItem('users') || '[]'));
+  const [tests, setTests] = useState<Test[]>(() => [...mockTests, ...JSON.parse(localStorage.getItem('custom_tests') || '[]')]);
   
-  const [vocabData, setVocabData] = useState<VocabularyTopic[]>([]);
-  const [grammarData, setGrammarData] = useState<GrammarTopic[]>([]);
-  const [flashcardData, setFlashcardData] = useState<Flashcard[]>([]);
+  const [vocabData, setVocabData] = useState<VocabularyTopic[]>(() => [...mockVocabulary, ...JSON.parse(localStorage.getItem('custom_vocab') || '[]')]);
+  const [grammarData, setGrammarData] = useState<GrammarTopic[]>(() => [...mockGrammar, ...JSON.parse(localStorage.getItem('custom_grammar') || '[]')]);
+  const [flashcardData, setFlashcardData] = useState<Flashcard[]>(() => [...mockFlashcards, ...JSON.parse(localStorage.getItem('custom_flashcards') || '[]')]);
+  const [storyData, setStoryData] = useState<ShortStory[]>(() => [...mockShortStories, ...JSON.parse(localStorage.getItem('custom_stories') || '[]')]);
   
-  const [searchTerm, setSearchTerm] = useState('');
-  const [catFilter, setCatFilter] = useState<string>('All');
-  const [yearFilter, setYearFilter] = useState<string>('All');
-  const [lessonType, setLessonType] = useState<'vocabulary' | 'grammar' | 'flashcards'>('vocabulary');
-
-  const [showModal, setShowModal] = useState(false);
-  const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
-  const [modalType, setModalType] = useState<'test' | 'vocabulary' | 'grammar' | 'flashcard' | 'notification'>('test');
-  
-  const [editingId, setEditingId] = useState<string | null>(null);
-  
-  // Form States
-  const [newTest, setNewTest] = useState<Partial<Test>>({ title: '', category: 'TOEIC', year: 2026, durationMinutes: 45, questions: [] });
-  const [newNotif, setNewNotif] = useState({ title: '', message: '', type: 'info' as any });
-  const [currentVocab, setCurrentVocab] = useState<Partial<VocabularyTopic>>({ title: '', description: '', words: [] });
-  const [currentGrammar, setCurrentGrammar] = useState<Partial<GrammarTopic>>({ title: '', content: '', examples: [] });
-  const [currentFlashcard, setCurrentFlashcard] = useState<Partial<Flashcard>>({ front: '', back: '', example: '', category: 'General' });
-
-  useEffect(() => {
-    const current = localStorage.getItem('currentUser');
-    if (!current) { navigate('/login'); return; }
-    const parsed = JSON.parse(current);
-    const allUsers: User[] = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = allUsers.find(u => u.email === parsed.email);
-    if (user?.role !== 'admin') { navigate('/'); return; }
-
-    setUsers(allUsers);
-    setTests([...mockTests, ...JSON.parse(localStorage.getItem('custom_tests') || '[]')]);
-    setVocabData([...mockVocabulary, ...JSON.parse(localStorage.getItem('custom_vocab') || '[]')]);
-    setGrammarData([...mockGrammar, ...JSON.parse(localStorage.getItem('custom_grammar') || '[]')]);
-    setFlashcardData([...mockFlashcards, ...JSON.parse(localStorage.getItem('custom_flashcards') || '[]')]);
-
+  const [results] = useState<TestResult[]>(() => {
     const allResults: TestResult[] = [];
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
       if (key?.startsWith('result_')) { allResults.push(JSON.parse(localStorage.getItem(key)!)); }
     }
-    setResults(allResults.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()));
-    setNotifications(JSON.parse(localStorage.getItem('notifications') || '[]'));
-  }, [navigate]);
+    return allResults.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  });
+  
+  const [notifications, setNotifications] = useState<Notification[]>(() => JSON.parse(localStorage.getItem('notifications') || '[]'));
+  
+  const [searchTerm, setSearchTerm] = useState('');
+  const [catFilter, setCatFilter] = useState<string>('All');
+  const [yearFilter, setYearFilter] = useState<string>('All');
+  const [lessonType, setLessonType] = useState<'vocabulary' | 'grammar' | 'flashcards' | 'shortstories'>('vocabulary');
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState<'add' | 'edit'>('add');
+  const [modalType, setModalType] = useState<'test' | 'vocabulary' | 'grammar' | 'flashcard' | 'notification' | 'shortstory'>('test');
+  
+  const [editingId, setEditingId] = useState<string | null>(null);
+  
+  // Form States
+  const [newTest, setNewTest] = useState<Partial<Test>>({ title: '', category: 'TOEIC', year: 2026, durationMinutes: 45, questions: [] });
+  const [newNotif, setNewNotif] = useState<{ title: string; message: string; type: Notification['type'] }>({ title: '', message: '', type: 'info' });
+  const [currentVocab, setCurrentVocab] = useState<Partial<VocabularyTopic>>({ title: '', description: '', words: [] });
+  const [currentGrammar, setCurrentGrammar] = useState<Partial<GrammarTopic>>({ title: '', content: '', examples: [] });
+  const [currentFlashcard, setCurrentFlashcard] = useState<Partial<Flashcard>>({ front: '', back: '', example: '', category: 'General' });
+  const [currentStory, setCurrentStory] = useState<Partial<ShortStory>>({ title: '', author: '', content: '', summary: '', level: 'Beginner', category: '' });
+
+  useEffect(() => {
+    const current = localStorage.getItem('currentUser');
+    if (!current) { navigate('/login'); return; }
+    const parsed = JSON.parse(current);
+    const user = users.find(u => u.email === parsed.email);
+    if (user?.role !== 'admin') { navigate('/'); return; }
+  }, [navigate, users]);
 
   const stats = {
     totalUsers: users.length,
     activeLearners: [...new Set(results.map(r => r.userEmail))].length,
     avgCompletionRate: results.length > 0 ? Math.min(100, Math.round((results.length / (users.length * 3 || 1)) * 100)) : 0,
     avgScore: results.length > 0 ? Math.round(results.reduce((acc, r) => acc + (r.score / r.totalQuestions), 0) / results.length * 100) : 0,
-    topLearners: Object.entries(results.reduce((acc: any, curr) => {
+    topLearners: Object.entries(results.reduce((acc: Record<string, number>, curr) => {
       const email = curr.userEmail || 'unknown';
       acc[email] = (acc[email] || 0) + 1;
       return acc;
-    }, {})).sort(([,a]: any, [,b]: any) => b - a).slice(0, 5)
+    }, {})).sort(([,a], [,b]) => b - a).slice(0, 5)
   };
 
   // MODAL OPENERS
@@ -110,15 +106,22 @@ const AdminDashboard: React.FC = () => {
   };
 
   const openAddLesson = () => {
-    const type = lessonType === 'vocabulary' ? 'vocabulary' : lessonType === 'grammar' ? 'grammar' : 'flashcard';
-    setModalType(type); setModalMode('add'); setEditingId(null); setShowModal(true);
+    let type: typeof modalType = 'vocabulary';
+    if (lessonType === 'grammar') type = 'grammar';
+    else if (lessonType === 'flashcards') type = 'flashcard';
+    else if (lessonType === 'shortstories') type = 'shortstory';
+    
+    setModalType(type);
+    if (type === 'shortstory') setCurrentStory({ title: '', author: '', content: '', summary: '', level: 'Beginner', category: '' });
+    setModalMode('add'); setEditingId(null); setShowModal(true);
   };
 
-  const openEditLesson = (item: any, type: any) => {
+  const openEditLesson = (item: VocabularyTopic | GrammarTopic | Flashcard | ShortStory, type: typeof modalType) => {
     setEditingId(item.id); setModalMode('edit'); setModalType(type);
-    if (type === 'vocabulary') setCurrentVocab(item);
-    if (type === 'grammar') setCurrentGrammar(item);
-    if (type === 'flashcard') setCurrentFlashcard(item);
+    if (type === 'vocabulary') setCurrentVocab(item as VocabularyTopic);
+    if (type === 'grammar') setCurrentGrammar(item as GrammarTopic);
+    if (type === 'flashcard') setCurrentFlashcard(item as Flashcard);
+    if (type === 'shortstory') setCurrentStory(item as ShortStory);
     setShowModal(true);
   };
 
@@ -130,6 +133,20 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
+  const pushNotification = (title: string, message: string, type: Notification['type']) => {
+    const notif: Notification = {
+      id: Date.now().toString(),
+      title,
+      message,
+      type,
+      date: new Date().toISOString(),
+      isRead: false
+    };
+    const updated = [notif, ...notifications];
+    setNotifications(updated);
+    localStorage.setItem('notifications', JSON.stringify(updated));
+  };
+
   // SAVE HANDLERS
   const handleSaveTest = (e: React.FormEvent) => {
     e.preventDefault();
@@ -137,39 +154,67 @@ const AdminDashboard: React.FC = () => {
     const customTests = JSON.parse(localStorage.getItem('custom_tests') || '[]');
     if (modalMode === 'edit') {
       setTests(tests.map(t => t.id === editingId ? testData : t));
-      localStorage.setItem('custom_tests', JSON.stringify(customTests.map((t: any) => t.id === editingId ? testData : t)));
+      localStorage.setItem('custom_tests', JSON.stringify(customTests.map((t: Test) => t.id === editingId ? testData : t)));
     } else {
       setTests([...tests, testData]);
       localStorage.setItem('custom_tests', JSON.stringify([...customTests, testData]));
-      const notif = { id: Date.now().toString(), title: 'New Exam Published!', message: `The exam "${testData.title}" is now live. Check it out!`, type: 'success' as any, date: new Date().toISOString(), isRead: false };
-      const updatedNotifs = [notif, ...notifications];
-      setNotifications(updatedNotifs);
-      localStorage.setItem('notifications', JSON.stringify(updatedNotifs));
+      pushNotification('New Exam Published!', `The exam "${testData.title}" is now live. Check it out!`, 'success');
     }
     setShowModal(false);
   };
 
   const handleSaveLesson = (e: React.FormEvent) => {
     e.preventDefault();
-    let data: any; let storageKey: string; let stateSet: any; let currentData: any;
-    if (modalType === 'vocabulary') { data = { ...currentVocab, id: modalMode === 'edit' ? editingId : `v-${Date.now()}` }; storageKey = 'custom_vocab'; stateSet = setVocabData; currentData = vocabData; }
-    else if (modalType === 'grammar') { data = { ...currentGrammar, id: modalMode === 'edit' ? editingId : `g-${Date.now()}` }; storageKey = 'custom_grammar'; stateSet = setGrammarData; currentData = grammarData; }
-    else { data = { ...currentFlashcard, id: modalMode === 'edit' ? editingId : `f-${Date.now()}` }; storageKey = 'custom_flashcards'; stateSet = setFlashcardData; currentData = flashcardData; }
-    const stored = JSON.parse(localStorage.getItem(storageKey) || '[]');
-    if (modalMode === 'edit') {
-      stateSet(currentData.map((v: any) => v.id === editingId ? data : v));
-      localStorage.setItem(storageKey, JSON.stringify(stored.map((v: any) => v.id === editingId ? data : v)));
-    } else {
-      stateSet([...currentData, data]);
-      localStorage.setItem(storageKey, JSON.stringify([...stored, data]));
+
+    const save = <T extends { id: string }>(
+      currentData: T[],
+      stateSet: React.Dispatch<React.SetStateAction<T[]>>,
+      data: T,
+      storageKey: string
+    ) => {
+      const stored = JSON.parse(localStorage.getItem(storageKey) || '[]');
+      if (modalMode === 'edit') {
+        stateSet(currentData.map((v) => v.id === editingId ? data : v));
+        localStorage.setItem(storageKey, JSON.stringify(stored.map((v: T) => v.id === editingId ? data : v)));
+      } else {
+        stateSet([...currentData, data]);
+        localStorage.setItem(storageKey, JSON.stringify([...stored, data]));
+      }
+    };
+
+    if (modalType === 'vocabulary') { 
+      const data = { ...currentVocab, id: modalMode === 'edit' ? editingId! : `v-${Date.now()}` } as VocabularyTopic; 
+      save(vocabData, setVocabData, data, 'custom_vocab');
     }
+    else if (modalType === 'grammar') { 
+      const data = { ...currentGrammar, id: modalMode === 'edit' ? editingId! : `g-${Date.now()}` } as GrammarTopic; 
+      save(grammarData, setGrammarData, data, 'custom_grammar');
+    }
+    else if (modalType === 'shortstory') { 
+      const data = { ...currentStory, id: modalMode === 'edit' ? editingId! : `s-${Date.now()}`, createdAt: new Date().toISOString() } as ShortStory; 
+      save(storyData, setStoryData, data, 'custom_stories');
+    }
+    else if (modalType === 'flashcard') { 
+      const data = { ...currentFlashcard, id: modalMode === 'edit' ? editingId! : `f-${Date.now()}` } as Flashcard; 
+      save(flashcardData, setFlashcardData, data, 'custom_flashcards');
+    }
+
     setShowModal(false);
   };
 
-  const updateQuestion = (index: number, field: keyof Question, value: any) => {
+  const updateQuestion = (index: number, field: keyof Question, value: string | string[]) => {
     const updatedQs = [...(newTest.questions || [])];
     updatedQs[index] = { ...updatedQs[index], [field]: value };
     setNewTest(prev => ({ ...prev, questions: updatedQs }));
+  };
+
+  const handleFileUpload = (index: number, file: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      updateQuestion(index, 'audioUrl', base64String);
+    };
+    reader.readAsDataURL(file);
   };
 
   const filteredTests = tests.filter(t => 
@@ -203,7 +248,7 @@ const AdminDashboard: React.FC = () => {
               <div className={styles.statCard}><div className={styles.iconBox} style={{background: '#fef2f2', color: '#ef4444'}}><Award size={28}/></div><div className={styles.statInfo}><span className={styles.statValue}>{stats.avgScore}%</span><span className={styles.statLabel}>Skill Mastery</span></div></div>
             </div>
             <div className={styles.analyticsGrid}>
-              <div className={styles.whitePanel}><h3 className={styles.panelTitle}>Top Performing Learners</h3><div className={styles.topLearnerList}>{stats.topLearners.map(([email, count]: any, idx) => (<div key={email} className={styles.learnerRankItem}><span className={styles.rankNum}>#{idx + 1}</span><div className={styles.learnerMain}><strong>{email}</strong><span>{count} exams taken</span></div><div className={styles.rankBadge}><Zap size={14}/> Top Pro</div></div>))}</div></div>
+              <div className={styles.whitePanel}><h3 className={styles.panelTitle}>Top Performing Learners</h3><div className={styles.topLearnerList}>{stats.topLearners.map(([email, count], idx) => (<div key={email} className={styles.learnerRankItem}><span className={styles.rankNum}>#{idx + 1}</span><div className={styles.learnerMain}><strong>{email}</strong><span>{count} exams taken</span></div><div className={styles.rankBadge}><Zap size={14}/> Top Pro</div></div>))}</div></div>
               <div className={styles.aiPanel}><div className={styles.aiHeader}><BrainCircuit size={36} className={styles.aiIcon} /><h3>AI-Powered Insights</h3></div><p className={styles.aiDesc}>Analyze weak points and predict future performance based on behavioral patterns.</p><div className={styles.aiConnectBox}><div className={styles.dashedCircle}><Cpu size={28} /></div><button className={styles.connectBtn}>Connect Intelligence</button></div></div>
             </div>
           </div>
@@ -245,13 +290,32 @@ const AdminDashboard: React.FC = () => {
         {activeTab === 'lessons' && (
           <div className={styles.lessonsPanel}>
             <div className={styles.panelHeader}><h1 className={styles.pageTitle}>Courseware</h1><button className={styles.sparkleBtnCyan} onClick={openAddLesson}><PlusCircle size={18} /> New Material</button></div>
-            <div className={styles.lessonTabs}><button className={lessonType === 'vocabulary' ? styles.activeLessonTab : ''} onClick={() => setLessonType('vocabulary')}>Vocabulary</button><button className={lessonType === 'grammar' ? styles.activeLessonTab : ''} onClick={() => setLessonType('grammar')}>Grammar</button><button className={lessonType === 'flashcards' ? styles.activeLessonTab : ''} onClick={() => setLessonType('flashcards')}>Flashcards</button></div>
+            <div className={styles.lessonTabs}>
+              <button className={lessonType === 'vocabulary' ? styles.activeLessonTab : ''} onClick={() => setLessonType('vocabulary')}>Vocabulary</button>
+              <button className={lessonType === 'grammar' ? styles.activeLessonTab : ''} onClick={() => setLessonType('grammar')}>Grammar</button>
+              <button className={lessonType === 'flashcards' ? styles.activeLessonTab : ''} onClick={() => setLessonType('flashcards')}>Flashcards</button>
+              <button className={lessonType === 'shortstories' ? styles.activeLessonTab : ''} onClick={() => setLessonType('shortstories')}>Short Stories</button>
+            </div>
             <div className={styles.lessonGrid}>
-              {(lessonType === 'vocabulary' ? vocabData : lessonType === 'grammar' ? grammarData : flashcardData).map((item: any) => (
+              {(lessonType === 'vocabulary' ? vocabData : lessonType === 'grammar' ? grammarData : lessonType === 'flashcards' ? flashcardData : storyData).map((item) => (
                 <div key={item.id} className={styles.lessonItem}>
-                  <div className={styles.lessonIconSmall}>{lessonType === 'vocabulary' ? <Type size={20}/> : <Layout size={20}/>}</div>
-                  <div className={styles.lessonInfoText}><strong>{item.title || item.front}</strong><span>{lessonType === 'vocabulary' ? `${item.words?.length || 0} items` : 'Live Material'}</span></div>
-                  <div className={styles.lessonActions}><button className={styles.tinyEdit} onClick={() => openEditLesson(item, lessonType === 'flashcards' ? 'flashcard' : lessonType)}><Edit size={16}/></button><button className={styles.tinyDelete}><Trash2 size={16}/></button></div>
+                  <div className={styles.lessonIconSmall}>{lessonType === 'vocabulary' ? <Type size={20}/> : lessonType === 'shortstories' ? <BookOpen size={20}/> : <Layout size={20}/>}</div>
+                  <div className={styles.lessonInfoText}><strong>{'title' in item ? item.title : item.front}</strong><span>{lessonType === 'vocabulary' ? `${(item as VocabularyTopic).words?.length || 0} items` : lessonType === 'shortstories' ? (item as ShortStory).level : 'Live Material'}</span></div>
+                  <div className={styles.lessonActions}>
+                    <button className={styles.tinyEdit} onClick={() => openEditLesson(item, lessonType === 'flashcards' ? 'flashcard' : lessonType === 'shortstories' ? 'shortstory' : lessonType)}>
+                      <Edit size={16}/>
+                    </button>
+                    <button className={styles.tinyDelete} onClick={() => {
+                      if(window.confirm('Delete this item?')) {
+                        if(lessonType === 'vocabulary') setVocabData(vocabData.filter(i => i.id !== item.id));
+                        else if(lessonType === 'grammar') setGrammarData(grammarData.filter(i => i.id !== item.id));
+                        else if(lessonType === 'flashcards') setFlashcardData(flashcardData.filter(i => i.id !== item.id));
+                        else if(lessonType === 'shortstories') setStoryData(storyData.filter(i => i.id !== item.id));
+                      }
+                    }}>
+                      <Trash2 size={16}/>
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
@@ -283,19 +347,43 @@ const AdminDashboard: React.FC = () => {
                     <h4>Exam Configuration</h4>
                     <div className={styles.inputGroup}><label>Test Title</label><input value={newTest.title} onChange={e => setNewTest({...newTest, title: e.target.value})} required placeholder="e.g., TOEIC Mock #05" /></div>
                     <div className={styles.formRow3}>
-                      <div className={styles.inputGroup}><label>Category</label><select value={newTest.category} onChange={e => setNewTest({...newTest, category: e.target.value as any})}><option value="TOEIC">TOEIC</option><option value="IELTS">IELTS</option></select></div>
+                      <div className={styles.inputGroup}><label>Category</label><select value={newTest.category} onChange={e => setNewTest({...newTest, category: e.target.value as Test['category']})}><option value="TOEIC">TOEIC</option><option value="IELTS">IELTS</option></select></div>
                       <div className={styles.inputGroup}><label>Year</label><input type="number" value={newTest.year} onChange={e => setNewTest({...newTest, year: parseInt(e.target.value)})} /></div>
                       <div className={styles.inputGroup}><label>Time (Min)</label><input type="number" value={newTest.durationMinutes} onChange={e => setNewTest({...newTest, durationMinutes: parseInt(e.target.value)})} /></div>
                     </div>
                   </div>
                   <div className={styles.formSection}>
-                    <div className={styles.headerRow}><h4>Questions Bank ({newTest.questions?.length})</h4><button type="button" className={styles.sparkleBtn} style={{padding: '8px 16px', fontSize: '0.85rem'}} onClick={() => {const newQ = { id: `q-${Date.now()}`, type: 'multiple-choice' as any, text: '', options: ['', '', '', ''], correctAnswer: '', explanation: '' }; setNewTest(prev => ({ ...prev, questions: [...(prev.questions || []), newQ] }))}}><Plus size={14}/> Add New Question</button></div>
+                    <div className={styles.headerRow}><h4>Questions Bank ({newTest.questions?.length})</h4><button type="button" className={styles.sparkleBtn} style={{padding: '8px 16px', fontSize: '0.85rem'}} onClick={() => {const newQ: Question = { id: `q-${Date.now()}`, type: 'multiple-choice', text: '', options: ['', '', '', ''], correctAnswer: '', explanation: '', skill: 'Grammar' }; setNewTest(prev => ({ ...prev, questions: [...(prev.questions || []), newQ] }))}}><Plus size={14}/> Add New Question</button></div>
                     <div className={styles.qList}>{newTest.questions?.map((q, idx) => (
                       <div key={idx} className={styles.qCard}>
                         <div className={styles.qCardHeader}><span>QUESTION #{idx + 1}</span><button type="button" onClick={() => {const updated = [...(newTest.questions || [])]; updated.splice(idx, 1); setNewTest({...newTest, questions: updated})}}><Trash2 size={16}/></button></div>
-                        <div className={styles.inputGroup}><label>Content</label><textarea value={q.text} onChange={e => updateQuestion(idx, 'text', e.target.value)} rows={2} /></div>
-                        <div className={styles.formRow3}>{q.options?.map((opt, oIdx) => (<div key={oIdx} className={styles.inputGroup}><label>Option {String.fromCharCode(65 + oIdx)}</label><input value={opt} onChange={e => {const opts = [...(q.options || [])]; opts[oIdx] = e.target.value; updateQuestion(idx, 'options', opts)}} /></div>))}</div>
-                        <div className={styles.formRow3} style={{gridTemplateColumns: '1fr 2fr'}}><div className={styles.inputGroup}><label>Correct Key</label><input value={q.correctAnswer} onChange={e => updateQuestion(idx, 'correctAnswer', e.target.value)} placeholder="A, B, C or D" /></div><div className={styles.inputGroup}><label>Explain</label><input value={q.explanation} onChange={e => updateQuestion(idx, 'explanation', e.target.value)} /></div></div>
+                        
+                        <div className={styles.formRow2}>
+                          <div className={styles.inputGroup}><label>Skill Category</label><select value={q.skill} onChange={e => updateQuestion(idx, 'skill', e.target.value)}><option value="Listening">Listening</option><option value="Reading">Reading</option><option value="Grammar">Grammar</option><option value="Vocabulary">Vocabulary</option></select></div>
+                          <div className={styles.inputGroup}>
+                            <label>Audio Content</label>
+                            <div className={styles.audioInputGroup}>
+                              <div className={styles.inputWithIcon} style={{flex: 1}}><Music size={16}/><input value={q.audioUrl || ''} onChange={e => updateQuestion(idx, 'audioUrl', e.target.value)} placeholder="Audio URL or Base64" /></div>
+                              <label className={styles.uploadIconButton}>
+                                <Upload size={18} />
+                                <input type="file" accept="audio/*" style={{display: 'none'}} onChange={(e) => e.target.files?.[0] && handleFileUpload(idx, e.target.files[0])} />
+                              </label>
+                            </div>
+                            {q.audioUrl?.startsWith('data:audio') && <span className={styles.uploadSuccess}>File uploaded (Base64)</span>}
+                          </div>
+                        </div>
+
+                        {q.skill === 'Reading' && (
+                          <div className={styles.inputGroup}><label>Reading Passage (Optional)</label><textarea value={q.passageText || ''} onChange={e => updateQuestion(idx, 'passageText', e.target.value)} rows={4} placeholder="Paste long reading passage here..." /></div>
+                        )}
+
+                        <div className={styles.inputGroup}><label>Image URL (Optional)</label><div className={styles.inputWithIcon}><ImageIcon size={16}/><input value={q.imageUrl || ''} onChange={e => updateQuestion(idx, 'imageUrl', e.target.value)} placeholder="https://..." /></div></div>
+
+                        <div className={styles.inputGroup}><label>Question Content</label><textarea value={q.text} onChange={e => updateQuestion(idx, 'text', e.target.value)} rows={2} /></div>
+                        
+                        <div className={styles.formRow4}>{q.options?.map((opt, oIdx) => (<div key={oIdx} className={styles.inputGroup}><label>Opt {String.fromCharCode(65 + oIdx)}</label><input value={opt} onChange={e => {const opts = [...(q.options || [])]; opts[oIdx] = e.target.value; updateQuestion(idx, 'options', opts)}} /></div>))}</div>
+                        
+                        <div className={styles.formRow3} style={{gridTemplateColumns: '1fr 2fr'}}><div className={styles.inputGroup}><label>Correct Answer</label><input value={q.correctAnswer} onChange={e => updateQuestion(idx, 'correctAnswer', e.target.value)} placeholder="A, B, C or D" /></div><div className={styles.inputGroup}><label>Explanation</label><input value={q.explanation} onChange={e => updateQuestion(idx, 'explanation', e.target.value)} /></div></div>
                       </div>
                     ))}</div>
                   </div>
@@ -316,11 +404,23 @@ const AdminDashboard: React.FC = () => {
                   }} required /></div>
                 </div>
               )}
+              {modalType === 'shortstory' && (
+                <div className={styles.formSection}>
+                  <div className={styles.inputGroup}><label>Story Title</label><input value={currentStory.title} onChange={e => setCurrentStory({...currentStory, title: e.target.value})} required /></div>
+                  <div className={styles.formRow3}>
+                    <div className={styles.inputGroup}><label>Author</label><input value={currentStory.author} onChange={e => setCurrentStory({...currentStory, author: e.target.value})} required /></div>
+                    <div className={styles.inputGroup}><label>Level</label><select value={currentStory.level} onChange={e => setCurrentStory({...currentStory, level: e.target.value as ShortStory['level']})}><option value="Beginner">Beginner</option><option value="Intermediate">Intermediate</option><option value="Advanced">Advanced</option></select></div>
+                    <div className={styles.inputGroup}><label>Category</label><input value={currentStory.category} onChange={e => setCurrentStory({...currentStory, category: e.target.value})} placeholder="e.g., Adventure" /></div>
+                  </div>
+                  <div className={styles.inputGroup}><label>Summary</label><textarea rows={2} value={currentStory.summary} onChange={e => setCurrentStory({...currentStory, summary: e.target.value})} required /></div>
+                  <div className={styles.inputGroup}><label>Story Content</label><textarea rows={10} value={currentStory.content} onChange={e => setCurrentStory({...currentStory, content: e.target.value})} required /></div>
+                </div>
+              )}
               {modalType === 'notification' && (
                 <div className={styles.formSection}>
                   <div className={styles.inputGroup}><label>Alert Headline</label><input value={newNotif.title} onChange={e => setNewNotif({...newNotif, title: e.target.value})} required /></div>
                   <div className={styles.inputGroup}><label>Broadcast Message</label><textarea rows={5} value={newNotif.message} onChange={e => setNewNotif({...newNotif, message: e.target.value})} required /></div>
-                  <div className={styles.inputGroup}><label>Priority Level</label><select value={newNotif.type} onChange={e => setNewNotif({...newNotif, type: e.target.value as any})}><option value="info">General Info</option><option value="success">Success / Promo</option><option value="warning">System Warning</option></select></div>
+                  <div className={styles.inputGroup}><label>Priority Level</label><select value={newNotif.type} onChange={e => setNewNotif({...newNotif, type: e.target.value as Notification['type']})}><option value="info">General Info</option><option value="success">Success / Promo</option><option value="warning">System Warning</option></select></div>
                 </div>
               )}
               <div className={styles.modalFooter}><button type="button" className={styles.cancelBtn} onClick={() => setShowModal(false)}>Discard Changes</button><button type="submit" className={styles.saveBtn}><Save size={18}/> {modalMode === 'edit' ? 'Update Database' : 'Publish to Users'}</button></div>

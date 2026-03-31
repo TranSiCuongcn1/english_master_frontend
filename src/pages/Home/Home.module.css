@@ -9,7 +9,8 @@
   gap: 60px;
   padding: 80px 20px;
   max-width: var(--max-width);
-  margin: 0 auto;
+  margin: 40px auto; /* Đổi margin cho chuẩn */
+  min-height: 500px;
 }
 
 .heroContent {

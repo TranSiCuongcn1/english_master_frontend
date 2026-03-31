@@ -1,24 +1,50 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { mockTests } from '../../data/tests';
-import { Clock, BookOpen, ChevronRight, ArrowLeft, ChevronLeft, Calendar } from 'lucide-react';
+import { Clock, BookOpen, ChevronRight, ArrowLeft, ChevronLeft, Calendar, Search, Bookmark, BookmarkCheck } from 'lucide-react';
 import styles from './CategoryPage.module.css';
 
 const CategoryPage: React.FC = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const [selectedYear, setSelectedYear] = useState<number | 'All'>('All');
+  const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const testsPerPage = 10;
+  const testsPerPage = 10; // Tối đa 10 bài mỗi trang
+  
+  const [savedTestIds, setSavedTestIds] = useState<string[]>(() => {
+    const user = localStorage.getItem('currentUser');
+    if (!user) return [];
+    const email = JSON.parse(user).email;
+    return JSON.parse(localStorage.getItem(`saved_tests_${email}`) || '[]');
+  });
+
+  const toggleSaveTest = (id: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    const user = localStorage.getItem('currentUser');
+    if (!user) return;
+    const email = JSON.parse(user).email;
+    
+    let updated: string[];
+    if (savedTestIds.includes(id)) {
+      updated = savedTestIds.filter(tid => tid !== id);
+    } else {
+      updated = [...savedTestIds, id];
+    }
+    
+    setSavedTestIds(updated);
+    localStorage.setItem(`saved_tests_${email}`, JSON.stringify(updated));
+  };
   
   const years = [2022, 2023, 2024, 2025, 2026];
 
-  // Lọc theo category và năm
+  // Lọc theo category, năm và từ khóa tìm kiếm
   const filteredByCategory = mockTests.filter(
     (test) => test.category.toLowerCase() === categoryId?.toLowerCase()
   );
 
   const filteredTests = filteredByCategory.filter(
-    (test) => selectedYear === 'All' || test.year === selectedYear
+    (test) => (selectedYear === 'All' || test.year === selectedYear) &&
+              (test.title.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   // Pagination logic
@@ -29,7 +55,7 @@ const CategoryPage: React.FC = () => {
 
   const handleYearChange = (year: number | 'All') => {
     setSelectedYear(year);
-    setCurrentPage(1); // Reset về trang 1 khi đổi năm
+    setCurrentPage(1);
   };
 
   const paginate = (pageNumber: number) => {
@@ -46,23 +72,38 @@ const CategoryPage: React.FC = () => {
         </Link>
         <h1 className={styles.title}>{categoryId?.toUpperCase()} Practice Tests</h1>
         
-        {/* THANH CHỌN NĂM */}
-        <div className={styles.yearFilter}>
-          <button 
-            className={`${styles.yearBtn} ${selectedYear === 'All' ? styles.activeYear : ''}`}
-            onClick={() => handleYearChange('All')}
-          >
-            All Years
-          </button>
-          {years.map(year => (
+        <div className={styles.filterRow}>
+          <div className={styles.searchWrapper}>
+            <Search size={20} className={styles.searchIcon} />
+            <input 
+              type="text" 
+              placeholder="Search tests by title..." 
+              className={styles.searchInput}
+              value={searchTerm}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setCurrentPage(1);
+              }}
+            />
+          </div>
+
+          <div className={styles.yearFilter}>
             <button 
-              key={year}
-              className={`${styles.yearBtn} ${selectedYear === year ? styles.activeYear : ''}`}
-              onClick={() => handleYearChange(year)}
+              className={`${styles.yearBtn} ${selectedYear === 'All' ? styles.activeYear : ''}`}
+              onClick={() => handleYearChange('All')}
             >
-              {year}
+              All Years
             </button>
-          ))}
+            {years.map(year => (
+              <button 
+                key={year}
+                className={`${styles.yearBtn} ${selectedYear === year ? styles.activeYear : ''}`}
+                onClick={() => handleYearChange(year)}
+              >
+                {year}
+              </button>
+            ))}
+          </div>
         </div>
 
         <p className={styles.subtitle}>
@@ -74,47 +115,42 @@ const CategoryPage: React.FC = () => {
         {currentTests.length > 0 ? (
           currentTests.map((test) => (
             <div key={test.id} className={styles.testCard}>
-              <div className={styles.cardHeader}>
-                <h2 className={styles.testTitle}>{test.title}</h2>
-                <span className={styles.yearBadge}>{test.year || 2026}</span>
-              </div>
-              <p className={styles.testDescription}>{test.description}</p>
+              <button 
+                className={`${styles.saveIconBtn} ${savedTestIds.includes(test.id) ? styles.isSaved : ''}`}
+                onClick={(e) => toggleSaveTest(test.id, e)}
+              >
+                {savedTestIds.includes(test.id) ? <BookmarkCheck size={20} /> : <Bookmark size={20} />}
+              </button>
               
-              <div className={styles.testMeta}>
-                <div className={styles.metaItem}>
-                  <Clock size={16} />
-                  <span>{test.durationMinutes} min</span>
+              <div className={styles.cardContent}>
+                <div className={styles.cardHeader}>
+                  <h2 className={styles.testTitle}>{test.title}</h2>
+                  <span className={styles.yearBadge}>{test.year}</span>
                 </div>
-                <div className={styles.metaItem}>
-                  <BookOpen size={16} />
-                  <span>{test.totalQuestions} questions</span>
-                </div>
-                <div className={styles.metaItem}>
-                  <Calendar size={16} />
-                  <span>Year: {test.year || 2026}</span>
+                <p className={styles.testDescription}>{test.description}</p>
+                
+                <div className={styles.testMeta}>
+                  <div className={styles.metaItem}><Clock size={16} /><span>{test.durationMinutes} min</span></div>
+                  <div className={styles.metaItem}><BookOpen size={16} /><span>{test.totalQuestions} Qs</span></div>
+                  <div className={styles.metaItem}><Calendar size={16} /><span>{test.year}</span></div>
                 </div>
               </div>
               
               <Link to={`/test/${test.id}`} className={styles.startButton}>
-                Start Test
-                <ChevronRight size={18} />
+                Start <ChevronRight size={18} />
               </Link>
             </div>
           ))
         ) : (
           <div className={styles.noTests}>
-            <p>No tests found for {selectedYear === 'All' ? 'this category' : `the year ${selectedYear}`}.</p>
+            <p>No tests found for your search.</p>
           </div>
         )}
       </section>
 
       {totalPages > 1 && (
         <div className={styles.pagination}>
-          <button 
-            onClick={() => paginate(currentPage - 1)} 
-            disabled={currentPage === 1}
-            className={styles.pageBtn}
-          >
+          <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} className={styles.pageBtn}>
             <ChevronLeft size={20} />
           </button>
           
@@ -128,11 +164,7 @@ const CategoryPage: React.FC = () => {
             </button>
           ))}
 
-          <button 
-            onClick={() => paginate(currentPage + 1)} 
-            disabled={currentPage === totalPages}
-            className={styles.pageBtn}
-          >
+          <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages} className={styles.pageBtn}>
             <ChevronRight size={20} />
           </button>
         </div>

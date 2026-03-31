@@ -195,8 +195,45 @@
 .inputGroup input:focus { border-color: #2563eb; box-shadow: 0 0 0 4px #eff6ff; }
 
 .formRow3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.formRow2 { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
+.formRow4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 
-.qCard { background: #f8fafc; padding: 28px; border-radius: 24px; border: 1px solid #e2e8f0; margin-bottom: 24px; }
+.inputWithIcon { position: relative; display: flex; align-items: center; }
+.inputWithIcon svg { position: absolute; left: 16px; color: #94a3b8; }
+.inputWithIcon input { padding-left: 48px !important; width: 100%; }
+
+.audioInputGroup {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.uploadIconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: #eff6ff;
+  color: #2563eb;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+  border: 1px solid #dbeafe;
+}
+
+.uploadIconButton:hover {
+  background: #dbeafe;
+}
+
+.uploadSuccess {
+  font-size: 0.75rem;
+  color: #10b981;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.qCard { background: #f8fafc; padding: 28px; border-radius: 24px; border: 1px solid #e2e8f0; margin-bottom: 24px; display: flex; flex-direction: column; gap: 20px; }
 .qCardHeader { display: flex; justify-content: space-between; margin-bottom: 20px; align-items: center; }
 .qCardHeader span { font-weight: 900; color: #2563eb; font-size: 1.1rem; }
 

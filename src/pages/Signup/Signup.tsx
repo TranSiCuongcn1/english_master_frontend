@@ -1,37 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, User as UserIcon, ArrowRight, BookOpen } from 'lucide-react';
-import styles from '../Login/Login.module.css'; // Dùng chung style với Login để đồng bộ
-import type { User } from '../../types';
+import styles from '../Login/Login.module.css';
+import authApi from '../../api/authApi';
+import { useAuth } from '../../context/AuthContext';
 
 const Signup: React.FC = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Kiểm tra xem email đã tồn tại chưa
-    const existingUsers: User[] = JSON.parse(localStorage.getItem('users') || '[]');
-    if (existingUsers.find((u: User) => u.email === email)) {
-      setError('Email already exists. Please use another one.');
-      return;
+    setError('');
+    setLoading(true);
+    try {
+      const response = await authApi.register({ name, email, password });
+      login(response.data);
+      navigate('/');
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || 'Registration failed. Please try again.');
+    } finally {
+      setLoading(false);
     }
-
-    // Lưu người dùng mới
-    const newUser: User = { name, email, password };
-    existingUsers.push(newUser);
-    localStorage.setItem('users', JSON.stringify(existingUsers));
-    
-    // Tự động đăng nhập sau khi đăng ký
-    localStorage.setItem('currentUser', JSON.stringify({ name, email }));
-    
-    alert('Account created successfully!');
-    navigate('/');
-    window.location.reload(); // Refresh để Navbar cập nhật trạng thái
   };
 
   return (
@@ -89,13 +85,14 @@ const Signup: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                minLength={6}
               />
             </div>
           </div>
 
-          <button type="submit" className={styles.submitBtn}>
-            Sign Up
-            <ArrowRight size={20} />
+          <button type="submit" className={styles.submitBtn} disabled={loading}>
+            {loading ? 'Creating account...' : 'Sign Up'}
+            {!loading && <ArrowRight size={20} />}
           </button>
         </form>
 

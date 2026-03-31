@@ -1,127 +1,208 @@
 .testTaking {
+  min-height: 100vh;
+  background-color: #f8fafc;
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  max-width: 1100px; /* Thống nhất 1100px */
-  margin: 0 auto;
-  width: 100%;
-}
-
-@media (max-width: 1150px) {
-  .testTaking {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
 }
 
 .testHeader {
-  background-color: var(--bg-card);
-  padding: 32px; /* Tăng padding */
-  border-radius: 16px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  background: white;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .headerMain {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.titleInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .testTitle {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: #1e293b;
+}
+
+.categoryBadge {
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
 }
 
 .timer {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background-color: var(--secondary-color);
-  color: var(--primary-color);
-  padding: 10px 20px;
-  border-radius: 10px;
+  gap: 0.75rem;
+  font-variant-numeric: tabular-nums;
   font-weight: 700;
   font-size: 1.25rem;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+}
+
+.timerWarning {
+  color: #ef4444;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
 }
 
 .progressBarContainer {
-  height: 8px;
-  background-color: var(--bg-main);
-  border-radius: 100px;
+  max-width: 1200px;
+  margin: 1rem auto 0;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
   overflow: hidden;
 }
 
 .progressBar {
   height: 100%;
-  background-color: var(--primary-color);
+  background: var(--primary-color);
   transition: width 0.3s ease;
 }
 
 .mainLayout {
-  display: grid;
-  grid-template-columns: 1fr 350px; /* Sidebar rộng hơn một chút */
-  gap: 32px;
-  align-items: start;
-}
-
-@media (max-width: 1024px) {
-  .mainLayout {
-    grid-template-columns: 1fr;
-  }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
 }
 
 .questionSection {
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+.questionActions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.flagButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #64748b;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.flagButton:hover {
+  border-color: #fbbf24;
+  color: #d97706;
+}
+
+.flagButton.flagged {
+  border-color: #fbbf24;
+  background: #fffbeb;
+  color: #d97706;
 }
 
 .navigationButtons {
   display: flex;
   justify-content: space-between;
-  margin-top: 24px;
+  align-items: center;
+  margin: 2rem 0;
 }
 
 .navButton {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 14px 28px;
-  border: 1px solid var(--border-color);
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
-  background-color: var(--bg-card);
+  cursor: pointer;
   font-weight: 600;
-  color: var(--text-main);
-  transition: all 0.2s;
+  color: #475569;
+}
+
+.navButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.navCenter {
+  font-weight: 600;
+  color: #64748b;
 }
 
 .submitButton {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 14px 28px;
-  background-color: var(--success-color);
-  color: #ffffff;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background: var(--primary-color);
+  color: white;
+  border: none;
   border-radius: 10px;
-  font-weight: 700;
-  transition: all 0.2s;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
 }
 
-.sidebar {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 32px;
-  position: sticky;
-  top: 100px;
+/* BOTTOM NAVIGATION */
+.bottomNavigation {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+}
+
+.gridHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.gridHeader h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.gridHeader span {
+  font-weight: 600;
+  color: #64748b;
 }
 
 .questionGrid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  gap: 0.75rem;
 }
 
 .gridItem {
@@ -129,15 +210,44 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 600;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  font-weight: 700;
   transition: all 0.2s;
+  position: relative;
 }
 
 .gridItem.active {
-  background-color: var(--primary-color);
-  color: #ffffff;
   border-color: var(--primary-color);
+  background: #eff6ff;
+  color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.gridItem.answered {
+  background: #475569;
+  color: white;
+  border-color: #475569;
+}
+
+.gridItem.gridFlagged {
+  border-color: #fbbf24;
+}
+
+.flagDot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 12px;
+  height: 12px;
+  background: #fbbf24;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Ẩn sidebar cũ nếu có bất kỳ style nào còn sót lại */
+.sidebar {
+  display: none;
 }

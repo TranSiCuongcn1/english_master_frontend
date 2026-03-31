@@ -1,130 +1,135 @@
-.container {
-  max-width: var(--max-width);
-  margin: 40px auto;
-  padding: 0 20px;
+.pageWrapper {
+  width: 100%;
 }
 
 .header {
-  margin-bottom: 40px;
-}
-
-.backLink {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-secondary);
-  font-weight: 600;
-  font-size: 0.95rem;
-  padding: 8px 16px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  width: fit-content;
-  margin-bottom: 24px;
-  transition: all 0.2s;
-}
-
-.backLink:hover {
-  color: var(--primary-color);
-  border-color: var(--primary-color);
-  background: var(--primary-light);
+  margin-bottom: 2.5rem;
 }
 
 .title {
   font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 16px;
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: -0.04em;
 }
 
 .subtitle {
   font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+.headerMain {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.titleSection {
+  flex: 1;
+}
+
+.searchWrapper {
+  position: relative;
+  flex: 1;
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.searchInput:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.searchInput::placeholder {
   color: var(--text-secondary);
 }
 
 .grammarList {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 2rem;
 }
 
 .grammarCard {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
+  background: var(--bg-main);
+  border: 2px solid var(--primary-light);
+  border-radius: 30px; /* Bo góc cong ra cực mạnh */
   overflow: hidden;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
 }
 
 .grammarCard:hover {
   border-color: var(--primary-color);
+  transform: scale(1.01);
+  box-shadow: var(--shadow-md);
 }
 
 .cardHeader {
-  padding: 24px 32px;
+  padding: 1.75rem 2.5rem;
+  background: var(--primary-light); /* Màu nền header khác biệt */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--bg-main);
   cursor: pointer;
 }
 
-.topicInfo {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.topicIcon {
-  color: var(--primary-color);
-}
-
 .topicTitle {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 800;
+  color: var(--primary-color);
 }
 
 .cardBody {
-  padding: 32px;
+  padding: 2.5rem;
+  background: var(--bg-card);
+  border-top: 2px solid var(--primary-light);
 }
 
-.content {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: var(--text-main);
-  margin-bottom: 32px;
-}
-
-.exampleSection h3 {
-  font-size: 1.1rem;
-  margin-bottom: 16px;
-  color: var(--primary-color);
-}
-
-.exampleList {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.exampleList li {
-  padding: 16px;
-  background: var(--primary-light);
-  border-radius: 12px;
-  border-left: 4px solid var(--primary-color);
-  font-weight: 500;
+.exampleSection {
+  background: var(--bg-main);
+  padding: 2rem;
+  border-radius: 24px;
+  border: 2px dashed var(--primary-light);
+  margin-bottom: 2rem;
 }
 
 .practiceBtn {
-  margin-top: 32px;
+  padding: 1rem 2.5rem;
   background: var(--primary-color);
   color: white;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 700;
-  transition: all 0.2s;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 1rem;
+  transition: 0.3s;
 }
 
 .practiceBtn:hover {
   background: var(--primary-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px -8px var(--primary-color);
 }

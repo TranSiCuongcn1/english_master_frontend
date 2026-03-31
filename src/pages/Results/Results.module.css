@@ -1,150 +1,343 @@
 .results {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  max-width: 1100px; /* Thống nhất 1100px */
-  margin: 0 auto;
-  width: 100%;
-  padding-bottom: 60px;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  padding-bottom: 5rem;
 }
 
-.header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 32px;
+.errorContainer {
+  text-align: center;
+  padding: 4rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.scoreCard {
-  background: var(--bg-card);
+/* Analytics Section */
+.analyticsSection {
+  background: white;
   border-radius: 24px;
-  padding: 32px 48px; /* Thu hẹp padding */
-  display: flex;
+  padding: 2.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 3rem;
   align-items: center;
-  gap: 60px;
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-lg);
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  height: auto; /* Để chiều cao tự thích ứng */
 }
 
-.scoreCard::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 6px;
-  background: var(--gradient-primary);
+.mainScore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding-right: 3rem;
+  border-right: 1px solid #f1f5f9;
 }
 
 .scoreCircle {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: #f8fafc;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 150px; /* Thu nhỏ từ 220px xuống 150px */
-  height: 150px;
-  background-color: var(--primary-light);
-  border-radius: 50%;
-  border: 8px solid var(--primary-color);
-  box-shadow: 0 0 30px rgba(37, 99, 235, 0.1);
-  flex-shrink: 0;
+  border: 8px solid #eff6ff;
+}
+
+.trophyIcon {
+  color: #fbbf24;
+  margin-bottom: 0.5rem;
+}
+
+.scoreInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .scoreValue {
-  font-size: 2.75rem; /* Thu nhỏ font chữ */
-  font-weight: 900;
-  color: var(--primary-color);
-  line-height: 1;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1e293b;
 }
 
 .scoreLabel {
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: var(--text-secondary);
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
-.stats {
-  display: flex;
-  gap: 60px;
-  flex: 1;
-  justify-content: flex-start;
-}
-
-.statItem {
+.quickStats {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-
-.statValue {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--text-main);
-}
-
-.statLabel {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.actions {
-  display: flex;
-  gap: 16px;
-}
-
-.retryButton, .homeButton {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
-.retryButton {
-  background: var(--gradient-primary);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-}
-
-.homeButton {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-}
-
-.reviewSection {
+  gap: 1rem;
   width: 100%;
 }
 
-.sectionTitle {
-  font-size: 1.75rem;
+.quickStat {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #f8fafc;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+}
+
+.quickStat strong {
+  display: block;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+.quickStat span {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+/* Skill Grid */
+.skillGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.skillCard {
+  background: #f8fafc;
+  padding: 1.25rem;
+  border-radius: 16px;
+  border: 1px solid #f1f5f9;
+}
+
+.skillHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.skillName {
+  font-weight: 700;
+  color: #475569;
+}
+
+.skillPercent {
   font-weight: 800;
-  margin-bottom: 24px;
-  color: var(--text-main);
+  color: var(--primary-color);
+}
+
+.progressTrack {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease-out;
+}
+
+.progressBar.listening { background: #0ea5e9; }
+.progressBar.reading { background: #eab308; }
+.progressBar.grammar { background: #22c55e; }
+.progressBar.vocabulary { background: #a855f7; }
+
+.skillCount {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.retryButton, .homeButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.retryButton {
+  background: var(--primary-color);
+  color: white;
+}
+
+.homeButton {
+  background: white;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+/* Review Section */
+.reviewTitleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
 }
 
 .reviewCard {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 24px;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow-sm);
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 1rem;
+  overflow: hidden;
 }
 
-.reviewCard.correct {
-  border-left: 6px solid var(--success-color);
+.reviewMain {
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.reviewCard.incorrect {
-  border-left: 6px solid var(--error-color);
+.reviewMain:hover {
+  background: #f8fafc;
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.statusGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.successIcon { color: #22c55e; }
+.errorIcon { color: #ef4444; }
+
+.questionNumber {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.metaGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #94a3b8;
+}
+
+.skillBadge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.skillBadge.listening { background: #e0f2fe; color: #0369a1; }
+.skillBadge.reading { background: #fef9c3; color: #854d0e; }
+.skillBadge.grammar { background: #f0fdf4; color: #166534; }
+.skillBadge.vocabulary { background: #faf5ff; color: #6b21a8; }
+
+.questionTextPreview {
+  font-size: 1.1rem;
+  color: #475569;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Expanded Details */
+.reviewDetails {
+  padding: 0 1.5rem 1.5rem;
+  border-top: 1px solid #f1f5f9;
+  background: #fcfdfe;
+}
+
+.reviewImage {
+  margin: 1.5rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  max-width: 500px;
+}
+
+.reviewImage img {
+  width: 100%;
+  display: block;
+}
+
+.reviewAudio {
+  margin-bottom: 1.5rem;
+}
+
+.miniAudioBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.answerComparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.answerBox {
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.boxLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.boxValue {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.correctBox { background: #f0fdf4; color: #166534; }
+.wrongBox { background: #fef2f2; color: #991b1b; }
+
+.explanationSection h4 {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+}
+
+.explanationSection p {
+  color: #1e293b;
+  line-height: 1.6;
 }

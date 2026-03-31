@@ -1,43 +1,34 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { Mail, Lock, ArrowRight, BookOpen } from 'lucide-react';
 import styles from './Login.module.css';
-import type { User } from '../../types';
+import authApi from '../../api/authApi';
+import { useAuth } from '../../context/AuthContext';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/';
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    let users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
-    
-    // Đảm bảo luôn có các tài khoản mặc định nếu danh sách trống
-    const defaultUsers = [
-      { name: 'Regular User', email: 'user@example.com', password: 'user123', role: 'user' },
-      { name: 'System Admin', email: 'admin@example.com', password: 'admin123', role: 'admin' }
-    ];
-
-    if (users.length === 0) {
-      users = defaultUsers as any;
-      localStorage.setItem('users', JSON.stringify(users));
-    }
-
-    const user = users.find((u: User) => u.email === email && u.password === password);
-
-    if (user) {
-      localStorage.setItem('currentUser', JSON.stringify({ 
-        name: user.name, 
-        email: user.email,
-        role: (user as any).role || 'user' 
-      }));
-      navigate('/');
-      window.location.reload();
-    } else {
-      setError('Invalid email or password');
+    setError('');
+    setLoading(true);
+    try {
+      const response = await authApi.login({ email, password });
+      login(response.data);
+      navigate(from, { replace: true });
+    } catch (err: unknown) {
+      const msg = (err as { response?: { data?: { message?: string } } })?.response?.data?.message;
+      setError(msg || 'Invalid email or password');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -88,9 +79,9 @@ const Login: React.FC = () => {
             </div>
           </div>
 
-          <button type="submit" className={styles.submitBtn}>
-            Log In
-            <ArrowRight size={20} />
+          <button type="submit" className={styles.submitBtn} disabled={loading}>
+            {loading ? 'Logging in...' : 'Log In'}
+            {!loading && <ArrowRight size={20} />}
           </button>
         </form>
 
